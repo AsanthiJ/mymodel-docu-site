@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>LIBProMod.simulate.main_for_gui &mdash; LIB Production Model 0.1.0b documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> LIB Production Model
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/LIBProMod.html">LIBProMod</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Model documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">LIB Production Model</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>LIBProMod.simulate.main_for_gui</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for LIBProMod.simulate.main_for_gui</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">LIBProMod.simulate.batch_cell</span> <span class="kn">import</span> <span class="n">BatchCell</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.postp.mat_stream_breakdown</span> <span class="kn">import</span> <span class="n">material_breakdown</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.input.process_para</span> <span class="kn">import</span> <span class="n">ProcessPara</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<div class="viewcode-block" id="main_data"><a class="viewcode-back" href="../../../_autosummary/LIBProMod.simulate.main_for_gui.main_data.html#LIBProMod.simulate.main_for_gui.main_data">[docs]</a><span class="k">def</span> <span class="nf">main_data</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">ProcessPara</span><span class="p">()</span>
+    <span class="n">cell_type</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">batch1</span> <span class="o">=</span> <span class="n">BatchCell</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">batch2</span> <span class="o">=</span> <span class="n">BatchCell</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">batch3</span> <span class="o">=</span> <span class="n">BatchCell</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">batch4</span> <span class="o">=</span> <span class="n">BatchCell</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">batch5</span> <span class="o">=</span> <span class="n">BatchCell</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">batch6</span> <span class="o">=</span> <span class="n">BatchCell</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">batch7</span> <span class="o">=</span> <span class="n">BatchCell</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">batch8</span> <span class="o">=</span> <span class="n">BatchCell</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">batch9</span> <span class="o">=</span> <span class="n">BatchCell</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+    <span class="n">batch10</span> <span class="o">=</span> <span class="n">BatchCell</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+    <span class="n">df_vst1</span><span class="p">,</span> <span class="n">df_nxy1</span><span class="p">,</span> <span class="n">df_cell_m1</span> <span class="o">=</span> <span class="n">material_breakdown</span><span class="p">(</span><span class="n">batch1</span><span class="p">)</span>
+    <span class="n">df_vst2</span><span class="p">,</span> <span class="n">df_nxy2</span><span class="p">,</span> <span class="n">df_cell_m2</span> <span class="o">=</span> <span class="n">material_breakdown</span><span class="p">(</span><span class="n">batch2</span><span class="p">)</span>
+    <span class="n">df_vst3</span><span class="p">,</span> <span class="n">df_nxy3</span><span class="p">,</span> <span class="n">df_cell_m3</span> <span class="o">=</span> <span class="n">material_breakdown</span><span class="p">(</span><span class="n">batch3</span><span class="p">)</span>
+    <span class="n">df_vst4</span><span class="p">,</span> <span class="n">df_nxy4</span><span class="p">,</span> <span class="n">df_cell_m4</span> <span class="o">=</span> <span class="n">material_breakdown</span><span class="p">(</span><span class="n">batch4</span><span class="p">)</span>
+    <span class="n">df_vst5</span><span class="p">,</span> <span class="n">df_nxy5</span><span class="p">,</span> <span class="n">df_cell_m5</span> <span class="o">=</span> <span class="n">material_breakdown</span><span class="p">(</span><span class="n">batch5</span><span class="p">)</span>
+    <span class="n">df_vst6</span><span class="p">,</span> <span class="n">df_nxy6</span><span class="p">,</span> <span class="n">df_cell_m6</span> <span class="o">=</span> <span class="n">material_breakdown</span><span class="p">(</span><span class="n">batch6</span><span class="p">)</span>
+    <span class="n">df_vst7</span><span class="p">,</span> <span class="n">df_nxy7</span><span class="p">,</span> <span class="n">df_cell_m7</span> <span class="o">=</span> <span class="n">material_breakdown</span><span class="p">(</span><span class="n">batch7</span><span class="p">)</span>
+    <span class="n">df_vst8</span><span class="p">,</span> <span class="n">df_nxy8</span><span class="p">,</span> <span class="n">df_cell_m8</span> <span class="o">=</span> <span class="n">material_breakdown</span><span class="p">(</span><span class="n">batch8</span><span class="p">)</span>
+    <span class="n">df_vst9</span><span class="p">,</span> <span class="n">df_nxy9</span><span class="p">,</span> <span class="n">df_cell_m9</span> <span class="o">=</span> <span class="n">material_breakdown</span><span class="p">(</span><span class="n">batch9</span><span class="p">)</span>
+    <span class="n">df_vst10</span><span class="p">,</span> <span class="n">df_nxy10</span><span class="p">,</span> <span class="n">df_cell_m10</span> <span class="o">=</span> <span class="n">material_breakdown</span><span class="p">(</span><span class="n">batch10</span><span class="p">)</span>
+    <span class="n">data_list_base_m1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;component&#39;</span><span class="p">:</span> <span class="n">batch1</span><span class="o">.</span><span class="n">cell_base_material_order</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">batch1</span><span class="o">.</span><span class="n">cell_base_material_1cell</span><span class="p">}</span>
+    <span class="n">data_list_base_m2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;component&#39;</span><span class="p">:</span> <span class="n">batch2</span><span class="o">.</span><span class="n">cell_base_material_order</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">batch2</span><span class="o">.</span><span class="n">cell_base_material_1cell</span><span class="p">}</span>
+    <span class="n">data_list_base_m3</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;component&#39;</span><span class="p">:</span> <span class="n">batch3</span><span class="o">.</span><span class="n">cell_base_material_order</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">batch3</span><span class="o">.</span><span class="n">cell_base_material_1cell</span><span class="p">}</span>
+    <span class="n">data_list_base_m4</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;component&#39;</span><span class="p">:</span> <span class="n">batch4</span><span class="o">.</span><span class="n">cell_base_material_order</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">batch4</span><span class="o">.</span><span class="n">cell_base_material_1cell</span><span class="p">}</span>
+    <span class="n">data_list_base_m5</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;component&#39;</span><span class="p">:</span> <span class="n">batch5</span><span class="o">.</span><span class="n">cell_base_material_order</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">batch5</span><span class="o">.</span><span class="n">cell_base_material_1cell</span><span class="p">}</span>
+    <span class="n">data_list_base_m6</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;component&#39;</span><span class="p">:</span> <span class="n">batch6</span><span class="o">.</span><span class="n">cell_base_material_order</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">batch6</span><span class="o">.</span><span class="n">cell_base_material_1cell</span><span class="p">}</span>
+    <span class="n">data_list_base_m7</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;component&#39;</span><span class="p">:</span> <span class="n">batch7</span><span class="o">.</span><span class="n">cell_base_material_order</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">batch7</span><span class="o">.</span><span class="n">cell_base_material_1cell</span><span class="p">}</span>
+    <span class="n">data_list_base_m8</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;component&#39;</span><span class="p">:</span> <span class="n">batch8</span><span class="o">.</span><span class="n">cell_base_material_order</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">batch8</span><span class="o">.</span><span class="n">cell_base_material_1cell</span><span class="p">}</span>
+    <span class="n">data_list_base_m9</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;component&#39;</span><span class="p">:</span> <span class="n">batch9</span><span class="o">.</span><span class="n">cell_base_material_order</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">batch9</span><span class="o">.</span><span class="n">cell_base_material_1cell</span><span class="p">}</span>
+    <span class="n">data_list_base_m10</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;component&#39;</span><span class="p">:</span> <span class="n">batch10</span><span class="o">.</span><span class="n">cell_base_material_order</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">batch10</span><span class="o">.</span><span class="n">cell_base_material_1cell</span><span class="p">}</span>
+    <span class="n">df_base_m1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list_base_m1</span><span class="p">)</span>
+    <span class="n">df_base_m2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list_base_m2</span><span class="p">)</span>
+    <span class="n">df_base_m3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list_base_m3</span><span class="p">)</span>
+    <span class="n">df_base_m4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list_base_m4</span><span class="p">)</span>
+    <span class="n">df_base_m5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list_base_m5</span><span class="p">)</span>
+    <span class="n">df_base_m6</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list_base_m6</span><span class="p">)</span>
+    <span class="n">df_base_m7</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list_base_m7</span><span class="p">)</span>
+    <span class="n">df_base_m8</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list_base_m8</span><span class="p">)</span>
+    <span class="n">df_base_m9</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list_base_m9</span><span class="p">)</span>
+    <span class="n">df_base_m10</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list_base_m10</span><span class="p">)</span>
+    <span class="n">energy_bar_id</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Mixing&#39;</span><span class="p">,</span> <span class="s1">&#39;Coating&#39;</span><span class="p">,</span> <span class="s1">&#39;Drying Anode&#39;</span><span class="p">,</span> <span class="s1">&#39;Drying Cathode&#39;</span><span class="p">,</span> <span class="s1">&#39;Calendering&#39;</span><span class="p">,</span> <span class="s1">&#39;Slitting&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;Stacking/Winding&#39;</span><span class="p">,</span>
+                     <span class="s1">&#39;Filling&#39;</span><span class="p">,</span> <span class="s1">&#39;Formation&#39;</span><span class="p">,</span> <span class="s1">&#39;Building Heating&#39;</span><span class="p">,</span> <span class="s1">&#39;Dry room&#39;</span><span class="p">]</span>
+    <span class="n">battery_type</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;LMO-G&#39;</span><span class="p">,</span> <span class="s1">&#39;NMC811-G&#39;</span><span class="p">,</span> <span class="s1">&#39;LFP-G&#39;</span><span class="p">,</span> <span class="s1">&#39;NCA-G&#39;</span><span class="p">,</span> <span class="s1">&#39;NMC622-G&#39;</span><span class="p">,</span> <span class="s1">&#39;NMC111-G&#39;</span><span class="p">,</span> <span class="s1">&#39;NMC532/LMO-G&#39;</span><span class="p">,</span> <span class="s1">&#39;NMC532-G&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;LMO-LTO&#39;</span><span class="p">,</span> <span class="s1">&#39;NMC111-Si&#39;</span><span class="p">]</span>
+    <span class="n">tot1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">batch1</span><span class="o">.</span><span class="n">energy_kWh_to_export_WhWh</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;LMO-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">batch2</span><span class="o">.</span><span class="n">energy_kWh_to_export_WhWh</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NMC811-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">batch3</span><span class="o">.</span><span class="n">energy_kWh_to_export_WhWh</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;LFP-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">batch4</span><span class="o">.</span><span class="n">energy_kWh_to_export_WhWh</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NCA-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">batch5</span><span class="o">.</span><span class="n">energy_kWh_to_export_WhWh</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NMC622-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot6</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">batch6</span><span class="o">.</span><span class="n">energy_kWh_to_export_WhWh</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NMC111-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot7</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">batch7</span><span class="o">.</span><span class="n">energy_kWh_to_export_WhWh</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NMC532/LMO-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span> \
+        <span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot8</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">batch8</span><span class="o">.</span><span class="n">energy_kWh_to_export_WhWh</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NMC532-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot9</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">batch9</span><span class="o">.</span><span class="n">energy_kWh_to_export_WhWh</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;LMO-LTO&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot10</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">batch10</span><span class="o">.</span><span class="n">energy_kWh_to_export_WhWh</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NMC111-Si&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot1k</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">batch1</span><span class="o">.</span><span class="n">energy_kWh_to_export_MJkg</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;LMO-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot2k</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">batch2</span><span class="o">.</span><span class="n">energy_kWh_to_export_MJkg</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NMC811-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot3k</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">batch3</span><span class="o">.</span><span class="n">energy_kWh_to_export_MJkg</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;LFP-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot4k</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">batch4</span><span class="o">.</span><span class="n">energy_kWh_to_export_MJkg</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NCA-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot5k</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">batch5</span><span class="o">.</span><span class="n">energy_kWh_to_export_MJkg</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NMC622-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot6k</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">batch6</span><span class="o">.</span><span class="n">energy_kWh_to_export_MJkg</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NMC111-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot7k</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">batch7</span><span class="o">.</span><span class="n">energy_kWh_to_export_MJkg</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NMC532/LMO-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span> \
+        <span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot8k</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">batch8</span><span class="o">.</span><span class="n">energy_kWh_to_export_MJkg</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NMC532-G&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot9k</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">batch9</span><span class="o">.</span><span class="n">energy_kWh_to_export_MJkg</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;LMO-LTO&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">tot10k</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">batch10</span><span class="o">.</span><span class="n">energy_kWh_to_export_MJkg</span><span class="p">,</span> <span class="n">energy_bar_id</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;NMC111-Si&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_bar_id</span><span class="p">)])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+    <span class="n">df_tot_wh</span> <span class="o">=</span> <span class="n">tot1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot2</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot3</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot4</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span> \
+        <span class="n">append</span><span class="p">(</span><span class="n">tot5</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot6</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot7</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span> \
+        <span class="n">append</span><span class="p">(</span><span class="n">tot8</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot9</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot10</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df_tot_wh</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Energy&#39;</span><span class="p">,</span> <span class="s1">&#39;Process&#39;</span><span class="p">,</span> <span class="s1">&#39;Battery&#39;</span><span class="p">]</span>
+    <span class="n">df_tot_kg</span> <span class="o">=</span> <span class="n">tot1k</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot2k</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot3k</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot4k</span><span class="p">,</span>
+                                                                                               <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span> \
+        <span class="n">append</span><span class="p">(</span><span class="n">tot5k</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot6k</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot7k</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span> \
+        <span class="n">append</span><span class="p">(</span><span class="n">tot8k</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot9k</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tot10k</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df_tot_kg</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Energy&#39;</span><span class="p">,</span> <span class="s1">&#39;Process&#39;</span><span class="p">,</span> <span class="s1">&#39;Battery&#39;</span><span class="p">]</span>
+
+    <span class="c1"># return df_vst1, df_vst2, df_nxy1</span>
+    <span class="c1"># mat_lists = [df_vst1, df_vst2, df_vst3, df_vst4, df_vst5, df_vst6, df_vst7, df_vst8, df_vst9, df_nxy1]</span>
+    <span class="k">return</span> <span class="n">df_tot_wh</span><span class="p">,</span> <span class="n">df_tot_kg</span><span class="p">,</span> <span class="n">df_vst1</span><span class="p">,</span> <span class="n">df_vst2</span><span class="p">,</span> <span class="n">df_vst3</span><span class="p">,</span> <span class="n">df_vst4</span><span class="p">,</span> <span class="n">df_vst5</span><span class="p">,</span> <span class="n">df_vst6</span><span class="p">,</span> <span class="n">df_vst7</span><span class="p">,</span> <span class="n">df_vst8</span><span class="p">,</span> <span class="n">df_vst9</span><span class="p">,</span> \
+           <span class="n">df_vst10</span><span class="p">,</span> <span class="n">df_nxy1</span><span class="p">,</span> <span class="n">df_cell_m1</span><span class="p">,</span> <span class="n">df_cell_m2</span><span class="p">,</span> <span class="n">df_cell_m3</span><span class="p">,</span> <span class="n">df_cell_m4</span><span class="p">,</span> <span class="n">df_cell_m5</span><span class="p">,</span> <span class="n">df_cell_m6</span><span class="p">,</span> <span class="n">df_cell_m7</span><span class="p">,</span> \
+           <span class="n">df_cell_m8</span><span class="p">,</span> <span class="n">df_cell_m9</span><span class="p">,</span> <span class="n">df_cell_m10</span><span class="p">,</span> <span class="n">df_base_m1</span><span class="p">,</span> <span class="n">df_base_m2</span><span class="p">,</span> <span class="n">df_base_m3</span><span class="p">,</span> <span class="n">df_base_m4</span><span class="p">,</span> <span class="n">df_base_m5</span><span class="p">,</span> <span class="n">df_base_m6</span><span class="p">,</span> \
+           <span class="n">df_base_m7</span><span class="p">,</span> <span class="n">df_base_m8</span><span class="p">,</span> <span class="n">df_base_m9</span><span class="p">,</span> <span class="n">df_base_m10</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, IndEcol NTNU.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

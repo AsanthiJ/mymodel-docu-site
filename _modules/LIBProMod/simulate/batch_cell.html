@@ -1,0 +1,427 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>LIBProMod.simulate.batch_cell &mdash; LIB Production Model 0.1.0b documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> LIB Production Model
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/LIBProMod.html">LIBProMod</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Model documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">LIB Production Model</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>LIBProMod.simulate.batch_cell</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for LIBProMod.simulate.batch_cell</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">LIBProMod.components.electrode</span> <span class="kn">import</span> <span class="n">Anode</span><span class="p">,</span> <span class="n">Cathode</span><span class="p">,</span> <span class="n">CurrentCollector</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.postp.base_material</span> <span class="kn">import</span> <span class="n">BaseMaterials</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.components.cellassembly</span> <span class="kn">import</span> <span class="n">CellAssembly</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.process.drying</span> <span class="kn">import</span> <span class="n">Drying</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.components.cell_comp</span> <span class="kn">import</span> <span class="n">Separator</span><span class="p">,</span> <span class="n">Electrolyte</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.input.initial_cell</span> <span class="kn">import</span> <span class="n">InitialCell</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.process.mixing</span> <span class="kn">import</span> <span class="n">Mixing</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.process.dry_room_ss</span> <span class="kn">import</span> <span class="n">DryRoomSs</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.simulate.tune_option2</span> <span class="kn">import</span> <span class="n">tune_option2</span>
+
+
+<div class="viewcode-block" id="BatchCell"><a class="viewcode-back" href="../../../_autosummary/LIBProMod.simulate.batch_cell.BatchCell.html#LIBProMod.simulate.batch_cell.BatchCell">[docs]</a><span class="k">class</span> <span class="nc">BatchCell</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Simulates the model for one batch of pre-calculated number of cells&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">para</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial</span> <span class="o">=</span> <span class="n">InitialCell</span><span class="p">(</span><span class="n">cell_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">)</span>
+        <span class="c1"># %%</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">anode_before_mixing</span> <span class="o">=</span> <span class="n">Anode</span><span class="p">(</span><span class="n">cell_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">ScrapPercentage</span> <span class="o">*</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cathode_before_mixing</span> <span class="o">=</span> <span class="n">Cathode</span><span class="p">(</span><span class="n">cell_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span>
+                                             <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">ScrapPercentage</span> <span class="o">*</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># Mixing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mixerA</span> <span class="o">=</span> <span class="n">Mixing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">anode_before_mixing</span><span class="p">,</span> <span class="n">para</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mixerC</span> <span class="o">=</span> <span class="n">Mixing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cathode_before_mixing</span><span class="p">,</span> <span class="n">para</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">anode_after_mixing</span> <span class="o">=</span> <span class="n">Anode</span><span class="p">(</span><span class="n">cell_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">ScrapPercentage</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">anode_before_mixing</span><span class="o">.</span><span class="n">MassInForNext</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cathode_after_mixing</span> <span class="o">=</span> <span class="n">Cathode</span><span class="p">(</span><span class="n">cell_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">ScrapPercentage</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="o">.</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">cathode_before_mixing</span><span class="o">.</span><span class="n">MassInForNext</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_mixing_anode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mixerA</span><span class="o">.</span><span class="n">Energy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_mixing_cathode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mixerC</span><span class="o">.</span><span class="n">Energy</span>
+        <span class="c1"># Drying</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cc_anode</span> <span class="o">=</span> <span class="n">CurrentCollector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">AnodeCCDensity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">AnodeCC</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">CellWidth</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">CellLength</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">CellsPerBatch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cc_cathode</span> <span class="o">=</span> <span class="n">CurrentCollector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">CathodeCCDensity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">CathodeCC</span><span class="p">,</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">CellWidth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">CellLength</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">CellsPerBatch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dryerA</span> <span class="o">=</span> <span class="n">Drying</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">anode_after_mixing</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cc_anode</span><span class="p">,</span> <span class="n">para</span><span class="o">.</span><span class="n">anode_dryer_temperature</span><span class="p">,</span> <span class="n">para</span><span class="o">.</span><span class="n">anode_dryer_time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dryerC</span> <span class="o">=</span> <span class="n">Drying</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cathode_after_mixing</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cc_cathode</span><span class="p">,</span> <span class="n">para</span><span class="o">.</span><span class="n">cathode_dryer_temperature</span><span class="p">,</span>
+                             <span class="n">para</span><span class="o">.</span><span class="n">cathode_dryer_time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">anode_after_drying</span> <span class="o">=</span> <span class="n">Anode</span><span class="p">(</span><span class="n">cell_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">ScrapPercentage</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">anode_after_mixing</span><span class="o">.</span><span class="n">MassInForNext</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cathode_after_drying</span> <span class="o">=</span> <span class="n">Cathode</span><span class="p">(</span><span class="n">cell_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">ScrapPercentage</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="o">.</span><span class="mi">1</span><span class="p">,</span>
+                                            <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cathode_after_mixing</span><span class="o">.</span><span class="n">MassInForNext</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_drying_anode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dryerA</span><span class="o">.</span><span class="n">get_drying_energy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_drying_cathode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dryerC</span><span class="o">.</span><span class="n">get_drying_energy</span><span class="p">()</span>
+        <span class="c1"># dry room</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">separator</span> <span class="o">=</span> <span class="n">Separator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">Separator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">SeparatorDensity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">CellLength</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">CellWidth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">CellsPerBatch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">electrolyte</span> <span class="o">=</span> <span class="n">Electrolyte</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">ElectrolyteVolume</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">ElectrolyteDensity</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">CellsPerBatch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dry_room</span> <span class="o">=</span> <span class="n">DryRoomSs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">anode_after_drying</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cathode_after_drying</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cc_anode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cc_cathode</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">separator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">electrolyte</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_dry_room</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dry_room</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">para</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">anode_after_dry_room</span> <span class="o">=</span> <span class="n">Anode</span><span class="p">(</span><span class="n">cell_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">ScrapPercentage</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="o">.</span><span class="mi">0725</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">anode_after_drying</span><span class="o">.</span><span class="n">MassInForNext</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cathode_after_dry_room</span> <span class="o">=</span> <span class="n">Cathode</span><span class="p">(</span><span class="n">cell_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">ScrapPercentage</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="o">.</span><span class="mi">0725</span><span class="p">,</span>
+                                              <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cathode_after_drying</span><span class="o">.</span><span class="n">MassInForNext</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span> <span class="o">=</span> <span class="n">CellAssembly</span><span class="p">(</span><span class="n">cell_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">anode_after_dry_room</span><span class="p">,</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">cathode_after_dry_room</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number_of_cells</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">SolidMass1cell</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_in_batch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">TotalMass</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">SpecificEnergy</span>  <span class="c1"># Wh</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span> <span class="o">=</span> <span class="n">BaseMaterials</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="p">,</span> <span class="n">cell_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">)</span>
+        <span class="c1">#  other processes</span>
+        <span class="c1"># coating</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coating_energy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">625</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">)</span> <span class="o">*</span> <span class="n">para</span><span class="o">.</span><span class="n">time_coating</span>  <span class="c1"># J 625 kW/h durr megtec procoater of 40m dryer</span>
+        <span class="c1"># calendering</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calendering_energy</span> <span class="o">=</span> <span class="mi">18</span> <span class="o">*</span> <span class="n">para</span><span class="o">.</span><span class="n">time_calendering</span>  <span class="c1"># kW*s TMAX-RM600 https://www.tmaxcn.com/hot-roller-press-calendering-machine-for-li-ion-battery-production-line_p1600.html</span>
+        <span class="c1"># slitting</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slitting_energy</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">para</span><span class="o">.</span><span class="n">time_slitting</span>  <span class="c1"># kW*s 50m/min TOB-110BH-600 https://www.tobmachine.com/500mm-automatic-slitting-machine-for-battery-electrode_p221.html</span>
+        <span class="c1"># 80m/min 2.2kW TOB-SL650 https://tobmachine.en.alibaba.com/product/60649463616-803657396/Automatic_Slitting_Machine_For_Li_Ion_Battery.html</span>
+        <span class="c1"># stacking</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stacking_energy</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">para</span><span class="o">.</span><span class="n">time_stacking</span>  <span class="c1"># kW*s TOB-S-DP-150 1.3-1.5 s/pcs https://www.tobmachine.com/semi-automatic-battery-stacking-machine-for-battery-electrode-z-fold-assemble_p555.html</span>
+        <span class="c1">#  electrolyte filling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filling_energy</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">para</span><span class="o">.</span><span class="n">time_filling</span>  <span class="c1"># kW*s TOB-AFMY-200 https://www.tobmachine.com/automatic-battery-filling-system-for-polymer-battery_p236.html</span>
+        <span class="c1"># forming and grading</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">formation_energy</span> <span class="o">=</span> <span class="mf">9.5</span> <span class="o">*</span> <span class="n">para</span><span class="o">.</span><span class="n">time_formation</span>  <span class="c1"># kW*s  not matching TOB-512-2LP https://www.tobmachine.com/512-channel-5v2a-battery-capacity-tester-for-polymer-battery_p925.html</span>
+        <span class="c1"># floor heating</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">floor_area</span> <span class="o">=</span> <span class="mi">30000</span>  <span class="c1"># m2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">floor_heating_energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">floor_area</span> <span class="o">*</span> <span class="p">(</span>
+                <span class="n">para</span><span class="o">.</span><span class="n">total_time</span> <span class="o">-</span> <span class="n">para</span><span class="o">.</span><span class="n">time_formation</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3600000</span> <span class="o">*</span> <span class="mi">15</span> <span class="o">*</span> <span class="mf">10.764</span>  <span class="c1"># 7-15 W per feet2(*10.764 perm2)</span>
+        <span class="c1"># %%  results conversion</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_mixing_anode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_mixing_cathode</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">coating_energy</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">energy_drying_anode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_drying_cathode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dryerA</span><span class="o">.</span><span class="n">EnergyAir</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">dryerC</span><span class="o">.</span><span class="n">EnergyAir</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">calendering_energy</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">slitting_energy</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">energy_dry_room</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stacking_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filling_energy</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">formation_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">floor_heating_energy</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ_order</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;mixing anode&#39;</span><span class="p">,</span> <span class="s1">&#39;mixing cathode&#39;</span><span class="p">,</span> <span class="s1">&#39;coating&#39;</span><span class="p">,</span> <span class="s1">&#39;drying anode&#39;</span><span class="p">,</span> <span class="s1">&#39;drying cathode&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;dryer anode air heating&#39;</span><span class="p">,</span> <span class="s1">&#39;dryer cathode air heating&#39;</span><span class="p">,</span> <span class="s1">&#39;calendering&#39;</span><span class="p">,</span> <span class="s1">&#39;slitting&#39;</span><span class="p">,</span>
+                                <span class="s1">&#39;dry room&#39;</span><span class="p">,</span> <span class="s1">&#39;winding&#39;</span><span class="p">,</span> <span class="s1">&#39;filling&#39;</span><span class="p">,</span> <span class="s1">&#39;formation&#39;</span><span class="p">,</span> <span class="s1">&#39;floor heating&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ_per_kg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">TotalMass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ_per_kWh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">TotalMass</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">SpecificEnergy</span>
+                                                   <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="c1"># self.energy_kJ_per_cell = self.energy_kJ / self.initial.CellsPerBatch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kWh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ</span> <span class="o">/</span> <span class="mi">3600</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kWh_per_kg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ_per_kg</span> <span class="o">/</span> <span class="mi">3600</span>
+        <span class="c1"># self.energy_kWh_per_kWh = self.energy_kJ_per_kWh / 3600</span>
+        <span class="c1"># self.energy_kWh_per_cell = self.energy_kJ_per_cell / 3600</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_energy_kJ</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_energy_kJ_per_kg</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ_per_kg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ_percent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_energy_kJ</span>
+
+        <span class="c1">#  sets the average values of Dai, so drying and dry room are close to 47-47%</span>
+        <span class="c1">#  add missing utilities for drying and dry room by multiplying 1.3 and then x everything by efficiency ex:.8</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tune1</span> <span class="o">=</span> <span class="mf">1.38</span>  <span class="c1"># 1.766</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tune2</span> <span class="o">=</span> <span class="mf">0.70</span>  <span class="c1"># 0.896</span>
+        <span class="c1">#  or fix the formation to 1.11 of Dai 2019 by dividing 0.896 and then fix drying and dry room ex: 1.766</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ_tuned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_mixing_anode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_mixing_cathode</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">coating_energy</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">energy_drying_anode</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_drying_cathode</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune1</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">dryerA</span><span class="o">.</span><span class="n">EnergyAir</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dryerC</span><span class="o">.</span><span class="n">EnergyAir</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune1</span><span class="p">,</span>
+                                         <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">calendering_energy</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">slitting_energy</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">energy_dry_room</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune1</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">stacking_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filling_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">formation_energy</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">floor_heating_energy</span><span class="p">])</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kWh_per_kWh_tuned</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ_tuned</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">TotalMass</span> <span class="o">*</span>
+                                                                <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">*</span> <span class="mf">3.6</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kWh_to_export</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_mixing_anode</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_mixing_cathode</span><span class="p">,</span>
+                                              <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">coating_energy</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_drying_anode</span> <span class="o">+</span>
+                                                                        <span class="bp">self</span><span class="o">.</span><span class="n">dryerA</span><span class="o">.</span><span class="n">EnergyAir</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune1</span><span class="p">,</span>
+                                              <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_drying_cathode</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dryerC</span><span class="o">.</span><span class="n">EnergyAir</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune1</span><span class="p">,</span>
+                                              <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">calendering_energy</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">slitting_energy</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">stacking_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filling_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">formation_energy</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">floor_heating_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_dry_room</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune1</span><span class="p">])</span> <span class="o">/</span> \
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">tune2</span>
+        <span class="c1">#  optional: sets lower or higher margin of Dai...</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tune3</span> <span class="o">=</span> <span class="mf">1.11</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">formation_energy</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">TotalMass</span> <span class="o">*</span>
+                                                      <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">*</span> <span class="mf">3.6</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ_tuned_option2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kWh_per_kWh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">TotalMass</span> <span class="o">*</span>
+                                                    <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">*</span> <span class="mf">3.6</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tunes</span> <span class="o">=</span> <span class="n">tune_option2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_kWh_per_kWh</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_kWh_per_kWh</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ_tuned_option2</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_dry_room</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ_tuned_option2</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tunes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ_tuned_option2</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kWh_per_kWh_tuned_option2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_kJ_tuned_option2</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">TotalMass</span> <span class="o">*</span>
+                                                                                <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">*</span> <span class="mf">3.6</span><span class="p">)</span>
+<span class="c1">#######</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kWh_to_export_WhWh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_kWh_to_export</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">TotalMass</span> <span class="o">*</span>
+                                                                      <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">*</span> <span class="mf">3.6</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_kWh_to_export_MJkg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_kWh_to_export</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">TotalMass</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_MJkg_to_csv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_mixing_anode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_mixing_cathode</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">coating_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coating_energy</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_drying_anode</span> <span class="o">+</span>
+                                                                                       <span class="bp">self</span><span class="o">.</span><span class="n">dryerA</span><span class="o">.</span><span class="n">EnergyAir</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune1</span><span class="p">,</span>
+                                            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_drying_cathode</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">dryerC</span><span class="o">.</span><span class="n">EnergyAir</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune1</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">calendering_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">calendering_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slitting_energy</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">slitting_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stacking_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filling_energy</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">formation_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">floor_heating_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_dry_room</span> <span class="o">*</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">tune1</span><span class="p">])</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">TotalMass</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_MJkg_order</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;anode mixing&#39;</span><span class="p">,</span> <span class="s1">&#39;cathode mixing&#39;</span><span class="p">,</span> <span class="s1">&#39;anode coating&#39;</span><span class="p">,</span> <span class="s1">&#39;cathode coating&#39;</span><span class="p">,</span> <span class="s1">&#39;anode drying&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;cathode drying&#39;</span><span class="p">,</span> <span class="s1">&#39;anode calendering&#39;</span><span class="p">,</span> <span class="s1">&#39;cathode calendering&#39;</span><span class="p">,</span> <span class="s1">&#39;anode slitting&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;cathode slitting&#39;</span><span class="p">,</span> <span class="s1">&#39;stacking/winding&#39;</span><span class="p">,</span> <span class="s1">&#39;filling&#39;</span><span class="p">,</span> <span class="s1">&#39;formation&#39;</span><span class="p">,</span> <span class="s1">&#39;floor heating&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;dry room&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cell_material_kg_1cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">AnodeActiveMaterialMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">AnodeCarbonMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">AnodeBinderMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">AnodeCCMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">CathodeActiveMaterialMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">CathodeCarbonMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">CathodeBinderMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">CathodeCCMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">SeparatorMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">ElectrolyteMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">NegativeTerminalMassOut</span><span class="p">,</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">PositiveTerminalMassOut</span><span class="p">,</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">ContainerMassOut</span><span class="p">])</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cell_material_order</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;anode active material&#39;</span><span class="p">,</span> <span class="s1">&#39;anode carbon&#39;</span><span class="p">,</span> <span class="s1">&#39;anode binder&#39;</span><span class="p">,</span> <span class="s1">&#39;anode current collector&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;cathode active material&#39;</span><span class="p">,</span> <span class="s1">&#39;cathode carbon&#39;</span><span class="p">,</span> <span class="s1">&#39;cathode binder&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;cathode current collector&#39;</span><span class="p">,</span> <span class="s1">&#39;separator&#39;</span><span class="p">,</span> <span class="s1">&#39;electrolyte&#39;</span><span class="p">,</span> <span class="s1">&#39;negative terminal&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;positive terminal&#39;</span><span class="p">,</span> <span class="s1">&#39;container&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material_1cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">CathodeActiveMaterial</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">Graphite</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">SiliconNanoWire</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">CarbonBlackAnode</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">CarbonBlackCathode</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">BinderSBRCMCAnode</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">BinderSBRCMCCathode</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">BinderPVDFAnode</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">BinderPVDFCathode</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">CopperFoil</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">CopperTab</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">AluminumFoil</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">AluminumTab</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">AluminumContainer</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">ElectrolyteLiPF6</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">ElectrolyteEC</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">ElectrolyteDMC</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">PlasticPE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">PlasticPP</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">PlasticPET</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">NMPAnode</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">NMPCathode</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">Water</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cell_scrap_base_material_1cell</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">CathodeActiveMaterial</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">Graphite</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">SiliconNanoWire</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">CarbonBlackAnode</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">CarbonBlackCathode</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">BinderSBRCMCAnode</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">BinderSBRCMCCathode</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">BinderPVDFAnode</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">BinderPVDFCathode</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">CopperFoil</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">CopperTab</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">AluminumFoil</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">AluminumTab</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">AluminumContainer</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">ElectrolyteLiPF6</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">ElectrolyteEC</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">ElectrolyteDMC</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">PlasticPE</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">PlasticPP</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">PlasticPET</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">NMPAnode</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">NMPCathode</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material</span><span class="o">.</span><span class="n">Water</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">number_of_cells</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cell_base_material_order</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Cathode active material&#39;</span><span class="p">,</span> <span class="s1">&#39;Graphite&#39;</span><span class="p">,</span> <span class="s1">&#39;Silicon Nano-wire&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39;Carbon black - Anode&#39;</span><span class="p">,</span> <span class="s1">&#39;Carbon black - Cathode&#39;</span><span class="p">,</span> <span class="s1">&#39;Binder SBR/CMC - Anode&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39;Binder SBR/CMC - Cathode&#39;</span><span class="p">,</span> <span class="s1">&#39;Binder PVDF - Anode&#39;</span><span class="p">,</span> <span class="s1">&#39;Binder PVDF - Cathode&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39;Copper - Foil&#39;</span><span class="p">,</span> <span class="s1">&#39;Copper - Tab&#39;</span><span class="p">,</span> <span class="s1">&#39;Aluminum - Foil&#39;</span><span class="p">,</span> <span class="s1">&#39;Aluminum - Tab&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39;Aluminum - Container&#39;</span><span class="p">,</span> <span class="s1">&#39;Electrolyte LiPF6&#39;</span><span class="p">,</span> <span class="s1">&#39;Electrolyte EC&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39;Electrolyte DMC or EMC&#39;</span><span class="p">,</span> <span class="s1">&#39;Plastic PE - Separator&#39;</span><span class="p">,</span> <span class="s1">&#39;Plastic PP - Container&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39;Plastic PET - Container&#39;</span><span class="p">,</span> <span class="s1">&#39;NMP - Anode&#39;</span><span class="p">,</span> <span class="s1">&#39;NMP - Cathode&#39;</span><span class="p">,</span> <span class="s1">&#39;Water&#39;</span><span class="p">]</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, IndEcol NTNU.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

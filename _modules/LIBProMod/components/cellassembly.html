@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>LIBProMod.components.cellassembly &mdash; LIB Production Model 0.1.0b documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> LIB Production Model
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/LIBProMod.html">LIBProMod</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Model documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">LIB Production Model</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>LIBProMod.components.cellassembly</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for LIBProMod.components.cellassembly</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.components.cell_comp</span> <span class="kn">import</span> <span class="n">Separator</span><span class="p">,</span> <span class="n">Electrolyte</span><span class="p">,</span> <span class="n">CellContainer</span><span class="p">,</span> <span class="n">NegativeTerminal</span><span class="p">,</span> <span class="n">PositiveTerminal</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.components.electrode</span> <span class="kn">import</span> <span class="n">CurrentCollector</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.input.initial_cell</span> <span class="kn">import</span> <span class="n">InitialCell</span>
+
+
+<div class="viewcode-block" id="CellAssembly"><a class="viewcode-back" href="../../../_autosummary/LIBProMod.components.cellassembly.CellAssembly.html#LIBProMod.components.cellassembly.CellAssembly">[docs]</a><span class="k">class</span> <span class="nc">CellAssembly</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; cell from anode, cathode, cc, electrolyte and separator&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">battery_chemistry</span><span class="p">,</span> <span class="n">battery_type</span><span class="p">,</span> <span class="n">anode</span><span class="p">,</span> <span class="n">cathode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ib</span> <span class="o">=</span> <span class="n">InitialCell</span><span class="p">(</span><span class="n">battery_chemistry</span><span class="p">,</span> <span class="n">battery_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">separator</span> <span class="o">=</span> <span class="n">Separator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">Separator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">SeparatorDensity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellLength</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellWidth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellsPerBatch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">electrolyte</span> <span class="o">=</span> <span class="n">Electrolyte</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">ElectrolyteVolume</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">ElectrolyteDensity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellsPerBatch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cc_anode</span> <span class="o">=</span> <span class="n">CurrentCollector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">AnodeCCDensity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">AnodeCC</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellWidth</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellLength</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellsPerBatch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cc_cathode</span> <span class="o">=</span> <span class="n">CurrentCollector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CathodeCCDensity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CathodeCC</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellWidth</span><span class="p">,</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellLength</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellsPerBatch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">CellContainer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">ContainerDensity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellThickness</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellWidth</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellLength</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">ContainerThickness</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellsPerBatch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">negative_terminal</span> <span class="o">=</span> <span class="n">NegativeTerminal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">AnodeCCDensity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">TerminalThickness</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">TerminalWidth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">TerminalLength</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellsPerBatch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">positive_terminal</span> <span class="o">=</span> <span class="n">PositiveTerminal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CathodeCCDensity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">TerminalThickness</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">TerminalWidth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">TerminalLength</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CellsPerBatch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TotalMass</span> <span class="o">=</span> <span class="n">anode</span><span class="o">.</span><span class="n">SolidMassOut</span> <span class="o">+</span> <span class="n">cathode</span><span class="o">.</span><span class="n">SolidMassOut</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cc_anode</span><span class="o">.</span><span class="n">Mass</span> <span class="o">+</span> \
+                         <span class="bp">self</span><span class="o">.</span><span class="n">cc_cathode</span><span class="o">.</span><span class="n">Mass</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">separator</span><span class="o">.</span><span class="n">Mass</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">electrolyte</span><span class="o">.</span><span class="n">Mass</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">Mass</span> <span class="o">+</span> \
+                         <span class="bp">self</span><span class="o">.</span><span class="n">negative_terminal</span><span class="o">.</span><span class="n">Mass</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">positive_terminal</span><span class="o">.</span><span class="n">Mass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ScrapMass</span> <span class="o">=</span> <span class="n">anode</span><span class="o">.</span><span class="n">ScrapMass</span> <span class="o">+</span> <span class="n">cathode</span><span class="o">.</span><span class="n">ScrapMass</span>  <span class="c1"># + self.cc_anode.Mass +\</span>
+        <span class="c1"># self.cc_cathode.Mass + self.separator.Mass + self.electrolyte.Mass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">cathode</span><span class="o">.</span><span class="n">SolidMassOut</span><span class="p">,</span> <span class="n">anode</span><span class="o">.</span><span class="n">SolidMassOut</span><span class="p">])</span>  <span class="c1"># * (1 - scrap_rate)</span>
+        <span class="c1">#  segregation to am, cb, bn, sol(-)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AnodeActiveMaterialMassOut</span> <span class="o">=</span> <span class="n">anode</span><span class="o">.</span><span class="n">ActiveMaterialMassOut</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CathodeActiveMaterialMassOut</span> <span class="o">=</span> <span class="n">cathode</span><span class="o">.</span><span class="n">ActiveMaterialMassOut</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCarbonMassOut</span> <span class="o">=</span> <span class="n">anode</span><span class="o">.</span><span class="n">CarbonMassOut</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCarbonMassOut</span> <span class="o">=</span> <span class="n">cathode</span><span class="o">.</span><span class="n">CarbonMassOut</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AnodeBinderMassOut</span> <span class="o">=</span> <span class="n">anode</span><span class="o">.</span><span class="n">BinderMassOut</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CathodeBinderMassOut</span> <span class="o">=</span> <span class="n">cathode</span><span class="o">.</span><span class="n">BinderMassOut</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCCMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cc_anode</span><span class="o">.</span><span class="n">Mass</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCCMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cc_cathode</span><span class="o">.</span><span class="n">Mass</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SeparatorMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">separator</span><span class="o">.</span><span class="n">Mass</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">electrolyte</span><span class="o">.</span><span class="n">Mass</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">NegativeTerminalMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">negative_terminal</span><span class="o">.</span><span class="n">Mass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PositiveTerminalMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positive_terminal</span><span class="o">.</span><span class="n">Mass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ContainerMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">Mass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AnodeSolventMassOut</span> <span class="o">=</span> <span class="n">anode</span><span class="o">.</span><span class="n">WetMassOut</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CathodeSolventMassOut</span> <span class="o">=</span> <span class="n">cathode</span><span class="o">.</span><span class="n">WetMassOut</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, IndEcol NTNU.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

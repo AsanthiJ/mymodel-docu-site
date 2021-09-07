@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>LIBProMod.process.dry_room_ss &mdash; LIB Production Model 0.1.0b documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> LIB Production Model
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/LIBProMod.html">LIBProMod</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Model documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">LIB Production Model</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>LIBProMod.process.dry_room_ss</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for LIBProMod.process.dry_room_ss</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="DryRoomSs"><a class="viewcode-back" href="../../../_autosummary/LIBProMod.process.dry_room_ss.DryRoomSs.html#LIBProMod.process.dry_room_ss.DryRoomSs">[docs]</a><span class="k">class</span> <span class="nc">DryRoomSs</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Calculates energy for dry room&quot;&quot;&quot;</span>
+    <span class="c1">#TemperatureOut = -40.0  # air out temperature in C</span>
+    <span class="n">HumidityOut</span> <span class="o">=</span> <span class="mf">99.0</span>  <span class="c1"># relative humidity of cooled air %x100</span>
+    <span class="n">HeatCapacity</span> <span class="o">=</span> <span class="mf">1.005</span>  <span class="c1"># air cp at 300K kJ/kgK</span>
+    <span class="c1">#DessicantTemperature = -60  # in celcius</span>
+    <span class="n">TransferAreaAir</span> <span class="o">=</span> <span class="mi">50</span>  <span class="c1"># heat transfer area air m2</span>
+    <span class="n">TransferAreaSolvent</span> <span class="o">=</span> <span class="mi">30</span>  <span class="c1"># area dessicant m2</span>
+    <span class="n">SolventFlowRate</span> <span class="o">=</span> <span class="mi">300</span>  <span class="c1"># kg / m2s</span>
+
+    <span class="c1"># Ga = 20    # 0.004 m3/s per m2  5 gpm per sq foot</span>
+    <span class="c1"># 6000 area per 100000 cells, m2</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anode</span><span class="p">,</span> <span class="n">cathode</span><span class="p">,</span> <span class="n">cc_anode</span><span class="p">,</span> <span class="n">cc_cathode</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">electrolyte</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AADR</span> <span class="o">=</span> <span class="n">anode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CADR</span> <span class="o">=</span> <span class="n">cathode</span>
+        <span class="c1"># self.TotalMass = anode.SolidMassOut + cathode.SolidMassOut + cc_anode.Mass + cc_cathode.Mass + \</span>
+        <span class="c1">#                 separator.Mass + electrolyte.Mass</span>
+
+    <span class="k">def</span> <span class="nf">enthalpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">moisture_content</span><span class="p">):</span>  <span class="c1"># kJ/kg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Enthalpy</span> <span class="o">=</span> <span class="mf">1.006</span> <span class="o">*</span> <span class="n">temperature</span> <span class="o">+</span> <span class="n">moisture_content</span> <span class="o">*</span> <span class="p">(</span><span class="mf">2500.77</span> <span class="o">+</span> <span class="n">temperature</span> <span class="o">*</span> <span class="mf">1.82</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Enthalpy</span>
+
+    <span class="k">def</span> <span class="nf">water_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">humidity</span><span class="p">,</span> <span class="n">sat_vapor_pressure</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WaterContent</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.62198</span> <span class="o">*</span> <span class="n">humidity</span> <span class="o">*</span> <span class="n">sat_vapor_pressure</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+                <span class="mi">101325</span> <span class="o">-</span> <span class="n">humidity</span> <span class="o">*</span> <span class="n">sat_vapor_pressure</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">WaterContent</span>
+
+    <span class="k">def</span> <span class="nf">saturated_vapor_pressure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temperature</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">VaporPressure</span> <span class="o">=</span> <span class="mf">133.322</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">20.386</span> <span class="o">-</span> <span class="mf">5132.</span> <span class="o">/</span> <span class="p">(</span><span class="n">temperature</span> <span class="o">+</span> <span class="mi">273</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">VaporPressure</span>
+
+    <span class="k">def</span> <span class="nf">energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">para</span><span class="p">):</span>  <span class="c1"># kJ</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">VaporPressureIn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saturated_vapor_pressure</span><span class="p">(</span><span class="n">para</span><span class="o">.</span><span class="n">air_temperature</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WaterContentIn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">water_content</span><span class="p">(</span><span class="n">para</span><span class="o">.</span><span class="n">air_humidity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">VaporPressureIn</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">EnthalpyIn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enthalpy</span><span class="p">(</span><span class="n">para</span><span class="o">.</span><span class="n">air_temperature</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">WaterContentIn</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Density</span> <span class="o">=</span> <span class="mf">101.325</span> <span class="o">/</span> <span class="p">(</span><span class="mf">0.2871</span> <span class="o">*</span> <span class="p">(</span><span class="n">para</span><span class="o">.</span><span class="n">air_temperature</span> <span class="o">+</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mf">1.6078</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">WaterContentIn</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ha</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolventFlowRate</span> <span class="o">**</span> <span class="o">.</span><span class="mi">27</span> <span class="o">*</span> <span class="n">para</span><span class="o">.</span><span class="n">air_flow_rate</span> <span class="o">**</span> <span class="mf">0.73</span>  <span class="c1"># W / m3K</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hs</span> <span class="o">=</span> <span class="mf">1.04e4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolventFlowRate</span> <span class="o">**</span> <span class="o">.</span><span class="mi">51</span> <span class="o">*</span> <span class="n">para</span><span class="o">.</span><span class="n">air_flow_rate</span> <span class="o">**</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Resistance</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ha</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">TransferAreaAir</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hs</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">TransferAreaSolvent</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">EnergyCooling</span> <span class="o">=</span> <span class="p">(</span><span class="n">para</span><span class="o">.</span><span class="n">air_temperature</span> <span class="o">-</span> <span class="n">para</span><span class="o">.</span><span class="n">desiccant_temperature</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Resistance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TemperatureOut</span> <span class="o">=</span> <span class="n">para</span><span class="o">.</span><span class="n">air_temperature</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">EnergyCooling</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ha</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">TransferAreaAir</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">EnergyHeating</span> <span class="o">=</span> <span class="n">para</span><span class="o">.</span><span class="n">air_flow_rate</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">HeatCapacity</span> <span class="o">*</span> <span class="p">(</span><span class="mi">22</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">TemperatureOut</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Energy</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">EnergyCooling</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">EnergyHeating</span><span class="p">)</span> <span class="o">*</span> <span class="n">para</span><span class="o">.</span><span class="n">time_dry_room</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Energy</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, IndEcol NTNU.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

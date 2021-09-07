@@ -1,0 +1,284 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>LIBProMod.components.electrode &mdash; LIB Production Model 0.1.0b documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> LIB Production Model
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/LIBProMod.html">LIBProMod</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Model documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">LIB Production Model</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>LIBProMod.components.electrode</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for LIBProMod.components.electrode</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">LIBProMod.components.material_comp</span> <span class="kn">import</span> <span class="n">ActiveMaterial</span><span class="p">,</span> <span class="n">Carbon</span><span class="p">,</span> <span class="n">Binder</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.components.solvent</span> <span class="kn">import</span> <span class="n">Solvent</span>
+<span class="kn">from</span> <span class="nn">LIBProMod.input.initial_cell</span> <span class="kn">import</span> <span class="n">InitialCell</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="Anode"><a class="viewcode-back" href="../../../_autosummary/LIBProMod.components.electrode.Anode.html#LIBProMod.components.electrode.Anode">[docs]</a><span class="k">class</span> <span class="nc">Anode</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Anode from active material, carbon, binder and solvent&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">battery_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">scrap_rate</span><span class="p">,</span> <span class="n">step_position</span><span class="p">,</span> <span class="n">mass_in</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ib</span> <span class="o">=</span> <span class="n">InitialCell</span><span class="p">(</span><span class="n">battery_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">am</span> <span class="o">=</span> <span class="n">ActiveMaterial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">SolidMass</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">Anode</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">step_position</span><span class="p">,</span> <span class="n">mass_in</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cb</span> <span class="o">=</span> <span class="n">Carbon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">SolidMass</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">Anode</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">step_position</span><span class="p">,</span> <span class="n">mass_in</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bn</span> <span class="o">=</span> <span class="n">Binder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">SolidMass</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">Anode</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">step_position</span><span class="p">,</span> <span class="n">mass_in</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sv</span> <span class="o">=</span> <span class="n">Solvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">AnodeSolvent</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">SolidMass</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">AnodeSolvent</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">step_position</span><span class="p">,</span>
+                          <span class="n">mass_in</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WetMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv</span><span class="o">.</span><span class="n">Mass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">am</span><span class="o">.</span><span class="n">ActiveMaterialMass</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cb</span><span class="o">.</span><span class="n">CarbonMass</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="o">.</span><span class="n">BinderMass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">svVolume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">WetMass</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv</span><span class="o">.</span><span class="n">Density</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SolidVolume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">am</span><span class="o">.</span><span class="n">ActiveMaterialMass</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">MaterialDensityA</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cb</span><span class="o">.</span><span class="n">CarbonMass</span> <span class="o">/</span> \
+                           <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">MaterialDensityA</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="o">.</span><span class="n">BinderMass</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">MaterialDensityA</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DryBulkDensity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidVolume</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WetMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">WetMass</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="o">-</span> <span class="n">scrap_rate</span><span class="p">,</span> <span class="n">scrap_rate</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SolidMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">scrap_rate</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ActiveMaterialMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">am</span><span class="o">.</span><span class="n">ActiveMaterialMass</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="o">-</span> <span class="n">scrap_rate</span><span class="p">,</span> <span class="n">scrap_rate</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CarbonMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cb</span><span class="o">.</span><span class="n">CarbonMass</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="o">-</span> <span class="n">scrap_rate</span><span class="p">,</span> <span class="n">scrap_rate</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BinderMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="o">.</span><span class="n">BinderMass</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="o">-</span> <span class="n">scrap_rate</span><span class="p">,</span> <span class="n">scrap_rate</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TotalMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMassOut</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">WetMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ScrapMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ActiveMaterialMassOut</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">CarbonMassOut</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">BinderMassOut</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> \
+                         <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">WetMassOut</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MassInForNext</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ActiveMaterialMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">CarbonMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">BinderMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">WetMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+    <span class="k">def</span> <span class="nf">total_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">WetMass</span></div>
+
+
+<div class="viewcode-block" id="Cathode"><a class="viewcode-back" href="../../../_autosummary/LIBProMod.components.electrode.Cathode.html#LIBProMod.components.electrode.Cathode">[docs]</a><span class="k">class</span> <span class="nc">Cathode</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Cathode from active material, carbon, binder and solvent&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">battery_type</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">scrap_rate</span><span class="p">,</span> <span class="n">step_position</span><span class="p">,</span> <span class="n">mass_in</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ib</span> <span class="o">=</span> <span class="n">InitialCell</span><span class="p">(</span><span class="n">battery_type</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">am</span> <span class="o">=</span> <span class="n">ActiveMaterial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">SolidMass</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">Cathode</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">step_position</span><span class="p">,</span> <span class="n">mass_in</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cb</span> <span class="o">=</span> <span class="n">Carbon</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">SolidMass</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">Cathode</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">step_position</span><span class="p">,</span> <span class="n">mass_in</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bn</span> <span class="o">=</span> <span class="n">Binder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">SolidMass</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">Cathode</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">step_position</span><span class="p">,</span> <span class="n">mass_in</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sv</span> <span class="o">=</span> <span class="n">Solvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CathodeSolvent</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">SolidMass</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">CathodeSolvent</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">step_position</span><span class="p">,</span>
+                          <span class="n">mass_in</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">am</span><span class="o">.</span><span class="n">ActiveMaterialMass</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cb</span><span class="o">.</span><span class="n">CarbonMass</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="o">.</span><span class="n">BinderMass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WetMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv</span><span class="o">.</span><span class="n">Mass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">svVolume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">WetMass</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv</span><span class="o">.</span><span class="n">Density</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SolidVolume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">am</span><span class="o">.</span><span class="n">ActiveMaterialMass</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">MaterialDensityC</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> \
+                           <span class="bp">self</span><span class="o">.</span><span class="n">cb</span><span class="o">.</span><span class="n">CarbonMass</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">MaterialDensityC</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> \
+                           <span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="o">.</span><span class="n">BinderMass</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ib</span><span class="o">.</span><span class="n">MaterialDensityC</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DryBulkDensity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidVolume</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SolidMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">scrap_rate</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ActiveMaterialMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">am</span><span class="o">.</span><span class="n">ActiveMaterialMass</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="o">-</span> <span class="n">scrap_rate</span><span class="p">,</span> <span class="n">scrap_rate</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CarbonMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cb</span><span class="o">.</span><span class="n">CarbonMass</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="o">-</span> <span class="n">scrap_rate</span><span class="p">,</span> <span class="n">scrap_rate</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BinderMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="o">.</span><span class="n">BinderMass</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="o">-</span> <span class="n">scrap_rate</span><span class="p">,</span> <span class="n">scrap_rate</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WetMassOut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">WetMass</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="o">-</span> <span class="n">scrap_rate</span><span class="p">,</span> <span class="n">scrap_rate</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">TotalMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMassOut</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">WetMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ScrapMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ActiveMaterialMassOut</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">CarbonMassOut</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">BinderMassOut</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> \
+                         <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">WetMassOut</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MassInForNext</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ActiveMaterialMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">CarbonMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">BinderMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">WetMassOut</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="c1"># self.TotalMass = self.SolidMass + self.WetMass - self.ScrapMass</span>
+
+    <span class="k">def</span> <span class="nf">total_mass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">WetMass</span></div>
+
+
+<div class="viewcode-block" id="CurrentCollector"><a class="viewcode-back" href="../../../_autosummary/LIBProMod.components.electrode.CurrentCollector.html#LIBProMod.components.electrode.CurrentCollector">[docs]</a><span class="k">class</span> <span class="nc">CurrentCollector</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Details of current collector&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">density</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">no_of_cells</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Density</span> <span class="o">=</span> <span class="n">density</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Thickness</span> <span class="o">=</span> <span class="n">thickness</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Volume</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Thickness</span> <span class="o">*</span> <span class="n">width</span> <span class="o">*</span> <span class="n">length</span> <span class="o">*</span> <span class="n">no_of_cells</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Mass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Density</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Volume</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, IndEcol NTNU.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

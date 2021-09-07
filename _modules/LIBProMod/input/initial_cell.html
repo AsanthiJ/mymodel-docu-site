@@ -1,0 +1,535 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>LIBProMod.input.initial_cell &mdash; LIB Production Model 0.1.0b documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> LIB Production Model
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/LIBProMod.html">LIBProMod</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Model documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">LIB Production Model</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>LIBProMod.input.initial_cell</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for LIBProMod.input.initial_cell</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span>
+
+
+<div class="viewcode-block" id="InitialCell"><a class="viewcode-back" href="../../../_autosummary/LIBProMod.input.initial_cell.InitialCell.html#LIBProMod.input.initial_cell.InitialCell">[docs]</a><span class="k">class</span> <span class="nc">InitialCell</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot; Initial composition of selected battery&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell_chemistry</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CellChemistry</span> <span class="o">=</span> <span class="n">cell_chemistry</span>
+        <span class="c1">#  1 LMO-G, 2 NMC811-G, 3 LFP-G, 4 NCA-G, 5 NMC622-G, 6 NMC111-G,</span>
+        <span class="c1">#  7 NMC532/50%/LMO-G,  8 NMC532-G, 9 LMO-LTO</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CellType</span> <span class="o">=</span> <span class="n">cell_type</span>
+        <span class="c1">#  1 prismatic, 2 pouch, 3 cylindrical</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellChemistry</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># LMO-G</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># prismatic</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BatteryName</span> <span class="o">=</span> <span class="s1">&#39;LMO-G&#39;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2705</span><span class="p">,</span> <span class="mf">0.09186</span><span class="p">]</span>  <span class="c1"># Cathode, Anode coating mass kg/cell</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">=</span> <span class="mi">211</span>  <span class="c1"># per cell Wh/kg</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.96</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>  <span class="c1"># mass fractions (of solid weight) active material, carbon, binder</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityC</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4230</span><span class="p">,</span> <span class="mi">1830</span><span class="p">,</span> <span class="mi">1770</span><span class="p">]</span>  <span class="c1"># density Cathode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2240</span><span class="p">,</span> <span class="mi">1950</span><span class="p">,</span> <span class="mi">1100</span><span class="p">]</span>  <span class="c1"># density Anode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="mf">0.02</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (1 NMP)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="mf">0.02</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (0 water)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span> <span class="o">=</span> <span class="mi">44</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCC</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector aluminium, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCCDensity</span> <span class="o">=</span> <span class="mi">2702</span>  <span class="c1"># density aluminium, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCC</span> <span class="o">=</span> <span class="mf">10e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector copper, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCCDensity</span> <span class="o">=</span> <span class="mi">8933</span>  <span class="c1"># density copper, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Separator</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average separator thickness polymer, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SeparatorDensity</span> <span class="o">=</span> <span class="mi">450</span>  <span class="c1"># batpac ?</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteVolume</span> <span class="o">=</span> <span class="mf">0.0461e-3</span>  <span class="c1"># Lipf6 volume m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteDensity</span> <span class="o">=</span> <span class="mi">1200</span>  <span class="c1"># Lipf6 in EC:DEC  kg/m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellLength</span> <span class="o">=</span> <span class="mf">190e-3</span>  <span class="c1"># length of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellWidth</span> <span class="o">=</span> <span class="mf">55e-3</span>  <span class="c1"># width of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellThickness</span> <span class="o">=</span> <span class="mf">20e-3</span>  <span class="c1"># thickness of cell, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerThickness</span> <span class="o">=</span> <span class="mf">150e-6</span>  <span class="c1"># thickness of PET-AL-PP wall m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerDensity</span> <span class="o">=</span> <span class="mi">2200</span>  <span class="c1"># density of PET-AL-PP (0.127: 0.817: 0.056) kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalWidth</span> <span class="o">=</span> <span class="mf">45e-3</span>  <span class="c1"># width of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalLength</span> <span class="o">=</span> <span class="mf">50e-3</span>  <span class="c1"># length of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalThickness</span> <span class="o">=</span> <span class="mf">1e-3</span>  <span class="c1"># thickness of terminal material m, for both Cathode and Anode</span>
+            <span class="c1"># #</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellChemistry</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># NMC811 G</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># prismatic</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BatteryName</span> <span class="o">=</span> <span class="s1">&#39;NMC811 G&#39;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.15469</span><span class="p">,</span> <span class="mf">0.10482</span><span class="p">]</span>  <span class="c1"># Cathode, Anode coating mass kg/cell</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">=</span> <span class="mi">243</span>  <span class="c1"># per cell Wh/kg</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.90</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]</span>  <span class="c1"># mass fractions (of solid weight) active material, carbon, binder</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityC</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4650</span><span class="p">,</span> <span class="mi">1830</span><span class="p">,</span> <span class="mi">1770</span><span class="p">]</span>  <span class="c1"># density Cathode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2200</span><span class="p">,</span> <span class="mi">1900</span><span class="p">,</span> <span class="mi">1800</span><span class="p">]</span>  <span class="c1"># density Anode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="mf">0.05</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (1 NMP)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="mf">0.02</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (0 water)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span> <span class="o">=</span> <span class="mi">80</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCC</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector aluminium, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCCDensity</span> <span class="o">=</span> <span class="mi">2702</span>  <span class="c1"># density aluminium, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCC</span> <span class="o">=</span> <span class="mf">10e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector copper, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCCDensity</span> <span class="o">=</span> <span class="mi">8933</span>  <span class="c1"># density copper, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Separator</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average separator thickness polymer, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SeparatorDensity</span> <span class="o">=</span> <span class="mi">550</span>  <span class="c1"># batpac</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteVolume</span> <span class="o">=</span> <span class="mf">0.0399e-3</span>  <span class="c1"># Lipf6 volume m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteDensity</span> <span class="o">=</span> <span class="mi">1200</span>  <span class="c1"># Lipf6 in EC:DEC  kg/m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellLength</span> <span class="o">=</span> <span class="mf">181e-3</span>  <span class="c1"># length of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellWidth</span> <span class="o">=</span> <span class="mf">52e-3</span>  <span class="c1"># width of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellThickness</span> <span class="o">=</span> <span class="mf">20e-3</span>  <span class="c1"># thickness of cell, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerThickness</span> <span class="o">=</span> <span class="mf">150e-6</span>  <span class="c1"># thickness of PET-AL-PP wall m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerDensity</span> <span class="o">=</span> <span class="mi">2200</span>  <span class="c1"># density of PET-AL-PP (0.127: 0.817: 0.056) kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalWidth</span> <span class="o">=</span> <span class="mf">42e-3</span>  <span class="c1"># width of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalLength</span> <span class="o">=</span> <span class="mf">50e-3</span>  <span class="c1"># length of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalThickness</span> <span class="o">=</span> <span class="mf">1e-3</span>  <span class="c1"># thickness of terminal material m, for both Cathode and Anode</span>
+            <span class="c1"># #</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellChemistry</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># LFP G</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># prismatic</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BatteryName</span> <span class="o">=</span> <span class="s1">&#39;LFP G&#39;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.23537</span><span class="p">,</span> <span class="mf">0.12037</span><span class="p">]</span>  <span class="c1"># Cathode, Anode coating mass kg/cell</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">=</span> <span class="mi">183</span>  <span class="c1"># per cell Wh/kg</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.96</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>  <span class="c1"># mass fractions (of solid weight) active material, carbon, binder</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityC</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3450</span><span class="p">,</span> <span class="mi">1830</span><span class="p">,</span> <span class="mi">1770</span><span class="p">]</span>  <span class="c1"># density Cathode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2240</span><span class="p">,</span> <span class="mi">1950</span><span class="p">,</span> <span class="mi">1100</span><span class="p">]</span>  <span class="c1"># density Anode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="mf">0.02</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (1 NMP)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="mf">0.02</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (0 water)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span> <span class="o">=</span> <span class="mi">63</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCC</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector aluminium, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCCDensity</span> <span class="o">=</span> <span class="mi">2702</span>  <span class="c1"># density aluminium, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCC</span> <span class="o">=</span> <span class="mf">10e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector copper, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCCDensity</span> <span class="o">=</span> <span class="mi">8933</span>  <span class="c1"># density copper, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Separator</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average separator thickness polymer, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SeparatorDensity</span> <span class="o">=</span> <span class="mi">450</span>  <span class="c1"># batpac</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteVolume</span> <span class="o">=</span> <span class="mf">0.0679e-3</span>  <span class="c1"># Lipf6 volume m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteDensity</span> <span class="o">=</span> <span class="mi">1200</span>  <span class="c1"># Lipf6 in EC:DEC  kg/m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellLength</span> <span class="o">=</span> <span class="mf">213e-3</span>  <span class="c1"># length of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellWidth</span> <span class="o">=</span> <span class="mf">63e-3</span>  <span class="c1"># width of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellThickness</span> <span class="o">=</span> <span class="mf">20e-3</span>  <span class="c1"># thickness of cell, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerThickness</span> <span class="o">=</span> <span class="mf">150e-6</span>  <span class="c1"># thickness of PET-AL-PP wall m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerDensity</span> <span class="o">=</span> <span class="mi">2200</span>  <span class="c1"># density of PET-AL-PP (0.127: 0.817: 0.056) kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalWidth</span> <span class="o">=</span> <span class="mf">53e-3</span>  <span class="c1"># width of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalLength</span> <span class="o">=</span> <span class="mf">50e-3</span>  <span class="c1"># length of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalThickness</span> <span class="o">=</span> <span class="mf">1e-3</span>  <span class="c1"># thickness of terminal material m, for both Cathode and Anode</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellChemistry</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>  <span class="c1"># NCA-G</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># prismatic</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BatteryName</span> <span class="o">=</span> <span class="s1">&#39;NCA G&#39;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.15674</span><span class="p">,</span> <span class="mf">0.10344</span><span class="p">]</span>  <span class="c1"># Cathode, Anode coating mass kg/cell</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">=</span> <span class="mi">243</span>  <span class="c1"># per cell Wh/kg</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.96</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>  <span class="c1"># mass fractions (of solid weight) active material, carbon, binder</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityC</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4780</span><span class="p">,</span> <span class="mi">1830</span><span class="p">,</span> <span class="mi">1770</span><span class="p">]</span>  <span class="c1"># density Cathode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2240</span><span class="p">,</span> <span class="mi">1950</span><span class="p">,</span> <span class="mi">1100</span><span class="p">]</span>  <span class="c1"># density Anode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                       <span class="mi">1</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (1 NMP)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                     <span class="mi">0</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (0 water)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span> <span class="o">=</span> <span class="mi">85</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCC</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector aluminium, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCCDensity</span> <span class="o">=</span> <span class="mi">2702</span>  <span class="c1"># density aluminium, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCC</span> <span class="o">=</span> <span class="mf">10e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector copper, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCCDensity</span> <span class="o">=</span> <span class="mi">8933</span>  <span class="c1"># density copper, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Separator</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average separator thickness polymer, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SeparatorDensity</span> <span class="o">=</span> <span class="mi">450</span>  <span class="c1"># batpac</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteVolume</span> <span class="o">=</span> <span class="mf">0.0408e-3</span>  <span class="c1"># Lipf6 volume m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteDensity</span> <span class="o">=</span> <span class="mi">1200</span>  <span class="c1"># Lipf6 in EC:DEC  kg/m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellLength</span> <span class="o">=</span> <span class="mf">178e-3</span>  <span class="c1"># length of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellWidth</span> <span class="o">=</span> <span class="mf">51e-3</span>  <span class="c1"># width of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellThickness</span> <span class="o">=</span> <span class="mf">20e-3</span>  <span class="c1"># thickness of cell, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerThickness</span> <span class="o">=</span> <span class="mf">150e-6</span>  <span class="c1"># thickness of PET-AL-PP wall m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerDensity</span> <span class="o">=</span> <span class="mi">2200</span>  <span class="c1"># density of PET-AL-PP (0.127: 0.817: 0.056) kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalWidth</span> <span class="o">=</span> <span class="mf">41e-3</span>  <span class="c1"># width of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalLength</span> <span class="o">=</span> <span class="mf">50e-3</span>  <span class="c1"># length of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalThickness</span> <span class="o">=</span> <span class="mf">1e-3</span>  <span class="c1"># thickness of terminal material m, for both Cathode and Anode</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellChemistry</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>  <span class="c1"># NMC622-G</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># prismatic</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BatteryName</span> <span class="o">=</span> <span class="s1">&#39;NMC622 G&#39;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.17089</span><span class="p">,</span> <span class="mf">0.10142</span><span class="p">]</span>  <span class="c1"># Cathode, Anode coating mass kg/cell</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">=</span> <span class="mi">237</span>  <span class="c1"># per cell Wh/kg</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.96</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>  <span class="c1"># mass fractions (of solid weight) active material, carbon, binder</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityC</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4650</span><span class="p">,</span> <span class="mi">1830</span><span class="p">,</span> <span class="mi">1770</span><span class="p">]</span>  <span class="c1"># density Cathode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2240</span><span class="p">,</span> <span class="mi">1950</span><span class="p">,</span> <span class="mi">1100</span><span class="p">]</span>  <span class="c1"># density Anode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                       <span class="mi">1</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (1 NMP)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                     <span class="mi">0</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (0 water)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span> <span class="o">=</span> <span class="mi">81</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCC</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector aluminium, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCCDensity</span> <span class="o">=</span> <span class="mi">2702</span>  <span class="c1"># density aluminium, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCC</span> <span class="o">=</span> <span class="mf">10e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector copper, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCCDensity</span> <span class="o">=</span> <span class="mi">8933</span>  <span class="c1"># density copper, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Separator</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average separator thickness polymer, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SeparatorDensity</span> <span class="o">=</span> <span class="mi">450</span>  <span class="c1"># batpac</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteVolume</span> <span class="o">=</span> <span class="mf">0.0418e-3</span>  <span class="c1"># Lipf6 volume m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteDensity</span> <span class="o">=</span> <span class="mi">1200</span>  <span class="c1"># Lipf6 in EC:DEC  kg/m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellLength</span> <span class="o">=</span> <span class="mf">181e-3</span>  <span class="c1"># length of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellWidth</span> <span class="o">=</span> <span class="mf">52e-3</span>  <span class="c1"># width of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellThickness</span> <span class="o">=</span> <span class="mf">20e-3</span>  <span class="c1"># thickness of cell, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerThickness</span> <span class="o">=</span> <span class="mf">150e-6</span>  <span class="c1"># thickness of PET-AL-PP wall m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerDensity</span> <span class="o">=</span> <span class="mi">2200</span>  <span class="c1"># density of PET-AL-PP (0.127: 0.817: 0.056) kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalWidth</span> <span class="o">=</span> <span class="mf">42e-3</span>  <span class="c1"># width of terminal material m, for both Cathode and Anode (cellwidth-10mm)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalLength</span> <span class="o">=</span> <span class="mf">50e-3</span>  <span class="c1"># length of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalThickness</span> <span class="o">=</span> <span class="mf">1e-3</span>  <span class="c1"># thickness of terminal material m, for both Cathode and Anode</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellChemistry</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>  <span class="c1"># NMC111-G or NMC333-G</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># prismatic</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BatteryName</span> <span class="o">=</span> <span class="s1">&#39;NMC111 G&#39;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.20275</span><span class="p">,</span> <span class="mf">0.10662</span><span class="p">]</span>  <span class="c1"># Cathode, Anode coating mass kg/cell</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">=</span> <span class="mi">215</span>  <span class="c1"># per cell Wh/kg</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.96</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>  <span class="c1"># mass fractions (of solid weight) active material, carbon, binder</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityC</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4650</span><span class="p">,</span> <span class="mi">1830</span><span class="p">,</span> <span class="mi">1770</span><span class="p">]</span>  <span class="c1"># density Cathode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2240</span><span class="p">,</span> <span class="mi">1950</span><span class="p">,</span> <span class="mi">1100</span><span class="p">]</span>  <span class="c1"># density Anode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                       <span class="mi">1</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (1 NMP)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                     <span class="mi">0</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (0 water)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span> <span class="o">=</span> <span class="mi">75</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCC</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector aluminium, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCCDensity</span> <span class="o">=</span> <span class="mi">2702</span>  <span class="c1"># density aluminium, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCC</span> <span class="o">=</span> <span class="mf">10e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector copper, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCCDensity</span> <span class="o">=</span> <span class="mi">8933</span>  <span class="c1"># density copper, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Separator</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average separator thickness polymer, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SeparatorDensity</span> <span class="o">=</span> <span class="mi">450</span>  <span class="c1"># batpac</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteVolume</span> <span class="o">=</span> <span class="mf">0.046e-3</span>  <span class="c1"># Lipf6 volume m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteDensity</span> <span class="o">=</span> <span class="mi">1200</span>  <span class="c1"># Lipf6 in EC:DEC  kg/m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellLength</span> <span class="o">=</span> <span class="mf">188e-3</span>  <span class="c1"># length of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellWidth</span> <span class="o">=</span> <span class="mf">55e-3</span>  <span class="c1"># width of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellThickness</span> <span class="o">=</span> <span class="mf">20e-3</span>  <span class="c1"># thickness of cell, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerThickness</span> <span class="o">=</span> <span class="mf">150e-6</span>  <span class="c1"># thickness of PET-AL-PP wall m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerDensity</span> <span class="o">=</span> <span class="mi">2200</span>  <span class="c1"># density of PET-AL-PP (0.127: 0.817: 0.056) kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalWidth</span> <span class="o">=</span> <span class="mf">45e-3</span>  <span class="c1"># width of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalLength</span> <span class="o">=</span> <span class="mf">50e-3</span>  <span class="c1"># length of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalThickness</span> <span class="o">=</span> <span class="mf">1e-3</span>  <span class="c1"># thickness of terminal material m, for both Cathode and Anode</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellChemistry</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>  <span class="c1"># NMC532/50%/LMO-G</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># prismatic</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BatteryName</span> <span class="o">=</span> <span class="s1">&#39;NMC532LMO G&#39;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.22547</span><span class="p">,</span> <span class="mf">0.10292</span><span class="p">]</span>  <span class="c1"># Cathode, Anode coating mass kg/cell</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">=</span> <span class="mi">221</span>  <span class="c1"># per cell Wh/kg</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.96</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>  <span class="c1"># mass fractions (of solid weight) active material, carbon, binder</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityC</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4440</span><span class="p">,</span> <span class="mi">3260</span><span class="p">,</span> <span class="mi">1770</span><span class="p">]</span>  <span class="c1"># density Cathode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2240</span><span class="p">,</span> <span class="mi">1950</span><span class="p">,</span> <span class="mi">1100</span><span class="p">]</span>  <span class="c1"># density Anode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                       <span class="mi">1</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (1 NMP)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                     <span class="mi">0</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (0 water)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span> <span class="o">=</span> <span class="mi">55</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCC</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector aluminium, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCCDensity</span> <span class="o">=</span> <span class="mi">2702</span>  <span class="c1"># density aluminium, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCC</span> <span class="o">=</span> <span class="mf">10e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector copper, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCCDensity</span> <span class="o">=</span> <span class="mi">8933</span>  <span class="c1"># density copper, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Separator</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average separator thickness polymer, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SeparatorDensity</span> <span class="o">=</span> <span class="mi">450</span>  <span class="c1"># batpac</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteVolume</span> <span class="o">=</span> <span class="mf">0.0445e-3</span>  <span class="c1"># Lipf6 volume m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteDensity</span> <span class="o">=</span> <span class="mi">1200</span>  <span class="c1"># Lipf6 in EC:DEC  kg/m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellLength</span> <span class="o">=</span> <span class="mf">187e-3</span>  <span class="c1"># length of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellWidth</span> <span class="o">=</span> <span class="mf">54e-3</span>  <span class="c1"># width of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellThickness</span> <span class="o">=</span> <span class="mf">20e-3</span>  <span class="c1"># thickness of cell, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerThickness</span> <span class="o">=</span> <span class="mf">150e-6</span>  <span class="c1"># thickness of PET-AL-PP wall m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerDensity</span> <span class="o">=</span> <span class="mi">2200</span>  <span class="c1"># density of PET-AL-PP (0.127: 0.817: 0.056) kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalWidth</span> <span class="o">=</span> <span class="mf">44e-3</span>  <span class="c1"># width of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalLength</span> <span class="o">=</span> <span class="mf">50e-3</span>  <span class="c1"># length of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalThickness</span> <span class="o">=</span> <span class="mf">1e-3</span>  <span class="c1"># thickness of terminal material m, for both Cathode and Anode</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellChemistry</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>  <span class="c1"># NMC532-G</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># prismatic</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BatteryName</span> <span class="o">=</span> <span class="s1">&#39;NMC532 G&#39;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.19572</span><span class="p">,</span> <span class="mf">0.10075</span><span class="p">]</span>  <span class="c1"># Cathode, Anode coating mass kg/cell</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">=</span> <span class="mi">223</span>  <span class="c1"># per cell Wh/kg</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.96</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>  <span class="c1"># mass fractions (of solid weight) active material, carbon, binder</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityC</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4650</span><span class="p">,</span> <span class="mi">4690</span><span class="p">,</span> <span class="mi">1770</span><span class="p">]</span>  <span class="c1"># density Cathode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2240</span><span class="p">,</span> <span class="mi">1900</span><span class="p">,</span> <span class="mi">1800</span><span class="p">]</span>  <span class="c1"># density Anode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                       <span class="mi">1</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (1 NMP)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                     <span class="mi">0</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (0 water)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span> <span class="o">=</span> <span class="mi">79</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCC</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector aluminium, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCCDensity</span> <span class="o">=</span> <span class="mi">2702</span>  <span class="c1"># density aluminium, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCC</span> <span class="o">=</span> <span class="mf">10e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector copper, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCCDensity</span> <span class="o">=</span> <span class="mi">8933</span>  <span class="c1"># density copper, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Separator</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average separator thickness polymer, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SeparatorDensity</span> <span class="o">=</span> <span class="mi">560</span>  <span class="c1"># batpac</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteVolume</span> <span class="o">=</span> <span class="mf">0.0412e-3</span>  <span class="c1"># Lipf6 volume m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteDensity</span> <span class="o">=</span> <span class="mi">1200</span>  <span class="c1"># Lipf6 in EC:DEC  kg/m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellLength</span> <span class="o">=</span> <span class="mf">184e-3</span>  <span class="c1"># length of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellWidth</span> <span class="o">=</span> <span class="mf">53e-3</span>  <span class="c1"># width of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellThickness</span> <span class="o">=</span> <span class="mf">20e-3</span>  <span class="c1"># thickness of cell, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerThickness</span> <span class="o">=</span> <span class="mf">150e-6</span>  <span class="c1"># thickness of PET-AL-PP wall m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerDensity</span> <span class="o">=</span> <span class="mi">2200</span>  <span class="c1"># density of PET-AL-PP (0.127: 0.817: 0.056) kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalWidth</span> <span class="o">=</span> <span class="mf">43e-3</span>  <span class="c1"># width of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalLength</span> <span class="o">=</span> <span class="mf">50e-3</span>  <span class="c1"># length of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalThickness</span> <span class="o">=</span> <span class="mf">1e-3</span>  <span class="c1"># thickness of terminal material m, for both Cathode and Anode</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellChemistry</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>  <span class="c1"># LMO-LTO</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># prismatic</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BatteryName</span> <span class="o">=</span> <span class="s1">&#39;LMO LTO&#39;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.42587</span><span class="p">,</span> <span class="mf">0.33183</span><span class="p">]</span>  <span class="c1"># Cathode, Anode coating mass kg/cell</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">=</span> <span class="mi">109</span>  <span class="c1"># per cell Wh/kg</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.96</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">]</span>  <span class="c1"># mass fractions (of solid weight) active material, carbon, binder</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.89</span><span class="p">,</span> <span class="mf">0.06</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityC</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4230</span><span class="p">,</span> <span class="mi">1830</span><span class="p">,</span> <span class="mi">1770</span><span class="p">]</span>  <span class="c1"># density Cathode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3400</span><span class="p">,</span> <span class="mi">1950</span><span class="p">,</span> <span class="mi">1100</span><span class="p">]</span>  <span class="c1"># density Anode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                       <span class="mi">1</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (1 NMP)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                     <span class="mi">1</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (0 water)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span> <span class="o">=</span> <span class="mi">31</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCC</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector aluminium, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCCDensity</span> <span class="o">=</span> <span class="mi">2702</span>  <span class="c1"># density aluminium, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCC</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector aluminium, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCCDensity</span> <span class="o">=</span> <span class="mi">2702</span>  <span class="c1"># density aluminium, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Separator</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average separator thickness polymer, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SeparatorDensity</span> <span class="o">=</span> <span class="mi">450</span>  <span class="c1"># batpac</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteVolume</span> <span class="o">=</span> <span class="mf">0.1272e-3</span>  <span class="c1"># Lipf6 volume m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteDensity</span> <span class="o">=</span> <span class="mi">1200</span>  <span class="c1"># Lipf6 in EC:DEC  kg/m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellLength</span> <span class="o">=</span> <span class="mf">269e-3</span>  <span class="c1"># length of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellWidth</span> <span class="o">=</span> <span class="mf">82e-3</span>  <span class="c1"># width of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellThickness</span> <span class="o">=</span> <span class="mf">20e-3</span>  <span class="c1"># thickness of cell, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerThickness</span> <span class="o">=</span> <span class="mf">150e-6</span>  <span class="c1"># thickness of PET-AL-PP wall m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerDensity</span> <span class="o">=</span> <span class="mi">2200</span>  <span class="c1"># density of PET-AL-PP (0.127: 0.817: 0.056) kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalWidth</span> <span class="o">=</span> <span class="mf">72e-3</span>  <span class="c1"># width of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalLength</span> <span class="o">=</span> <span class="mf">49e-3</span>  <span class="c1"># length of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalThickness</span> <span class="o">=</span> <span class="mf">1e-3</span>  <span class="c1"># thickness of terminal material m, for both Cathode and Anode</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellChemistry</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>  <span class="c1"># NMC333-Si</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># prismatic</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BatteryName</span> <span class="o">=</span> <span class="s1">&#39;NMC333 Si&#39;</span>  <span class="c1"># data from Li, et al. (2014). https://doi.org/10.1021/es4037786</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.09</span><span class="p">,</span> <span class="mf">0.10736</span><span class="p">]</span>  <span class="c1"># Cathode, Anode coating mass kg/cell</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SpecificEnergy</span> <span class="o">=</span> <span class="mi">360</span>  <span class="c1"># per cell Wh/kg pack-360, cell cal-184, so mean</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.92</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">]</span>  <span class="c1"># mass fractions (of solid weight) active material, carbon, binder</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityC</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4650</span><span class="p">,</span> <span class="mi">1830</span><span class="p">,</span> <span class="mi">1770</span><span class="p">]</span>  <span class="c1"># density Cathode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MaterialDensityA</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1950</span><span class="p">,</span> <span class="mi">1100</span><span class="p">]</span>  <span class="c1"># density Anode am, carbon, binder, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Cathode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                       <span class="mi">1</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (1 NMP)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeSolvent</span> <span class="o">=</span> <span class="p">[</span><span class="mi">96</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Anode</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">4</span><span class="p">,</span>
+                                     <span class="mi">0</span><span class="p">]</span>  <span class="c1"># solvent mass w.r.t. solid mass, solvent type (0 water)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span> <span class="o">=</span> <span class="mi">75</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCC</span> <span class="o">=</span> <span class="mf">15e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector aluminium, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CathodeCCDensity</span> <span class="o">=</span> <span class="mi">2702</span>  <span class="c1"># density aluminium, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCC</span> <span class="o">=</span> <span class="mf">12e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average thickness current collector copper, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">AnodeCCDensity</span> <span class="o">=</span> <span class="mi">8933</span>  <span class="c1"># density copper, kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Separator</span> <span class="o">=</span> <span class="mf">20e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">BiCellLayers</span>  <span class="c1"># average separator thickness polymer, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">SeparatorDensity</span> <span class="o">=</span> <span class="mi">1200</span>  <span class="c1"># batpac</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteVolume</span> <span class="o">=</span> <span class="mf">0.07083e-3</span>  <span class="c1"># Lipf6 volume m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ElectrolyteDensity</span> <span class="o">=</span> <span class="mi">1200</span>  <span class="c1"># Lipf6 in EC:DEC  kg/m^3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellLength</span> <span class="o">=</span> <span class="mf">132e-3</span>  <span class="c1"># length of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellWidth</span> <span class="o">=</span> <span class="mf">55e-3</span>  <span class="c1"># width of an electrode, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CellThickness</span> <span class="o">=</span> <span class="mf">20e-3</span>  <span class="c1"># thickness of cell, m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerThickness</span> <span class="o">=</span> <span class="mf">150e-6</span>  <span class="c1"># thickness of PET-AL-PP wall m</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ContainerDensity</span> <span class="o">=</span> <span class="mi">2200</span>  <span class="c1"># density of PET-AL-PP (0.127: 0.817: 0.056) kg/m3</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalWidth</span> <span class="o">=</span> <span class="mf">45e-3</span>  <span class="c1"># width of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalLength</span> <span class="o">=</span> <span class="mf">50e-3</span>  <span class="c1"># length of terminal material m, for both Cathode and Anode</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">TerminalThickness</span> <span class="o">=</span> <span class="mf">1e-3</span>  <span class="c1"># thickness of terminal material m, for both Cathode and Anode</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Undefined battery chemistry&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expected_slurry_mass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">CathodeSolvent</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                                            <span class="bp">self</span><span class="o">.</span><span class="n">AnodeSolvent</span><span class="p">[</span><span class="mi">0</span><span class="p">]]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_slurry_mass</span> <span class="o">=</span> <span class="mi">600</span>  <span class="c1"># EIRICH mixer type Resistance - capacity: RV11VAC = max 600 kg or 375 litres</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_slurry_mass</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_slurry_mass</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ScrapPercentage</span> <span class="o">=</span> <span class="mf">8.0</span> <span class="o">/</span> <span class="mi">100</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SolidMassTotal</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">CellsPerBatch</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ScrapPercentage</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SolidMass</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SolidMassTotal</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SolidMass1cell</span><span class="p">))</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, IndEcol NTNU.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

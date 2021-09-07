@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>LIBProMod.postp.mat_stream_breakdown &mdash; LIB Production Model 0.1.0b documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/readthedocs-custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> LIB Production Model
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/LIBProMod.html">LIBProMod</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Model documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">LIB Production Model</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>LIBProMod.postp.mat_stream_breakdown</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for LIBProMod.postp.mat_stream_breakdown</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<div class="viewcode-block" id="material_breakdown"><a class="viewcode-back" href="../../../_autosummary/LIBProMod.postp.mat_stream_breakdown.material_breakdown.html#LIBProMod.postp.mat_stream_breakdown.material_breakdown">[docs]</a><span class="k">def</span> <span class="nf">material_breakdown</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
+    <span class="n">am1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">anode_before_mixing</span><span class="o">.</span><span class="n">am</span><span class="o">.</span><span class="n">ActiveMaterialMass</span>
+    <span class="n">cb1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">anode_before_mixing</span><span class="o">.</span><span class="n">cb</span><span class="o">.</span><span class="n">CarbonMass</span>
+    <span class="n">bn1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">anode_before_mixing</span><span class="o">.</span><span class="n">bn</span><span class="o">.</span><span class="n">BinderMass</span>
+    <span class="n">sol1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">anode_before_mixing</span><span class="o">.</span><span class="n">WetMass</span>
+    <span class="n">am2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cathode_before_mixing</span><span class="o">.</span><span class="n">am</span><span class="o">.</span><span class="n">ActiveMaterialMass</span>
+    <span class="n">cb2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cathode_before_mixing</span><span class="o">.</span><span class="n">cb</span><span class="o">.</span><span class="n">CarbonMass</span>
+    <span class="n">bn2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cathode_before_mixing</span><span class="o">.</span><span class="n">bn</span><span class="o">.</span><span class="n">BinderMass</span>
+    <span class="n">sol2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cathode_before_mixing</span><span class="o">.</span><span class="n">WetMass</span>
+    <span class="c1"># mixing</span>
+    <span class="n">am_mix1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">anode_after_mixing</span><span class="o">.</span><span class="n">ActiveMaterialMassOut</span>
+    <span class="n">cb_mix1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">anode_after_mixing</span><span class="o">.</span><span class="n">CarbonMassOut</span>
+    <span class="n">bn_mix1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">anode_after_mixing</span><span class="o">.</span><span class="n">BinderMassOut</span>
+    <span class="n">sol_mix1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">anode_after_mixing</span><span class="o">.</span><span class="n">WetMassOut</span>
+    <span class="n">am_mix2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cathode_after_mixing</span><span class="o">.</span><span class="n">ActiveMaterialMassOut</span>
+    <span class="n">cb_mix2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cathode_after_mixing</span><span class="o">.</span><span class="n">CarbonMassOut</span>
+    <span class="n">bn_mix2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cathode_after_mixing</span><span class="o">.</span><span class="n">BinderMassOut</span>
+    <span class="n">sol_mix2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cathode_after_mixing</span><span class="o">.</span><span class="n">WetMassOut</span>
+    <span class="c1"># drying</span>
+    <span class="n">am_dry1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">anode_after_drying</span><span class="o">.</span><span class="n">ActiveMaterialMassOut</span>
+    <span class="n">cb_dry1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">anode_after_drying</span><span class="o">.</span><span class="n">CarbonMassOut</span>
+    <span class="n">bn_dry1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">anode_after_drying</span><span class="o">.</span><span class="n">BinderMassOut</span>
+    <span class="n">sol_dry1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">anode_after_drying</span><span class="o">.</span><span class="n">WetMassOut</span>  <span class="c1"># should go out</span>
+    <span class="n">am_dry2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cathode_after_drying</span><span class="o">.</span><span class="n">ActiveMaterialMassOut</span>
+    <span class="n">cb_dry2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cathode_after_drying</span><span class="o">.</span><span class="n">CarbonMassOut</span>
+    <span class="n">bn_dry2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cathode_after_drying</span><span class="o">.</span><span class="n">BinderMassOut</span>
+    <span class="n">sol_dry2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cathode_after_drying</span><span class="o">.</span><span class="n">WetMassOut</span>  <span class="c1"># should go out</span>
+    <span class="n">cc1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cc_anode</span><span class="o">.</span><span class="n">Mass</span>
+    <span class="n">cc2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cc_cathode</span><span class="o">.</span><span class="n">Mass</span>
+    <span class="c1"># dry room</span>
+    <span class="n">am_drm1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">AnodeActiveMaterialMassOut</span>
+    <span class="n">cb_drm1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">AnodeCarbonMassOut</span>
+    <span class="n">bn_drm1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">AnodeBinderMassOut</span>
+    <span class="n">am_drm2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">CathodeActiveMaterialMassOut</span>
+    <span class="n">cb_drm2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">CathodeCarbonMassOut</span>
+    <span class="n">bn_drm2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">CathodeBinderMassOut</span>
+    <span class="n">cc_drm1</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">AnodeCCMassOut</span>
+    <span class="n">cc_drm2</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">CathodeCCMassOut</span>
+    <span class="n">sep</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">SeparatorMassOut</span>
+    <span class="n">elec</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">ElectrolyteMassOut</span>
+    <span class="n">n_terminal</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">NegativeTerminalMassOut</span>
+    <span class="n">p_terminal</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">PositiveTerminalMassOut</span>
+    <span class="n">cont</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">cell_after_dry_room</span><span class="o">.</span><span class="n">ContainerMassOut</span>
+    <span class="n">cells</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">initial</span><span class="o">.</span><span class="n">CellsPerBatch</span> <span class="o">/</span> <span class="mi">1000</span>  <span class="c1"># to make kg to g</span>
+
+    <span class="n">label_cell</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Anode Active material&quot;</span><span class="p">,</span> <span class="s2">&quot;Cathode Active material&quot;</span><span class="p">,</span> <span class="s2">&quot;Anode Carbon&quot;</span><span class="p">,</span> <span class="s2">&quot;Cathode Carbon&quot;</span><span class="p">,</span> <span class="s2">&quot;Anode Binder&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;Cathode Binder&quot;</span><span class="p">,</span> <span class="s2">&quot;Anode Current Collector&quot;</span><span class="p">,</span> <span class="s2">&quot;Cathode Current Collector&quot;</span><span class="p">,</span> <span class="s2">&quot;Separator&quot;</span><span class="p">,</span> <span class="s2">&quot;Electrolyte&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;Negative Terminal&quot;</span><span class="p">,</span> <span class="s2">&quot;Positive Terminal&quot;</span><span class="p">,</span> <span class="s2">&quot;Container&quot;</span><span class="p">]</span>
+    <span class="n">value_t_cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">am_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">am_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cc_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cc_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                    <span class="n">sep</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">elec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">n_terminal</span><span class="p">,</span> <span class="n">p_terminal</span><span class="p">,</span> <span class="n">cont</span><span class="p">]</span>
+    <span class="n">value_cell</span> <span class="o">=</span> <span class="n">value_t_cell</span> <span class="o">/</span> <span class="n">cells</span>
+    <span class="c1">#value_cell = []</span>
+    <span class="c1">#for ele in range(0, len(value_t_cell)):</span>
+    <span class="c1">#    value_cell[ele] = value_t_cell[ele] / cells</span>
+
+    <span class="n">data_list_cell_m</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;component&#39;</span><span class="p">:</span> <span class="n">label_cell</span><span class="p">,</span> <span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">value_cell</span><span class="p">}</span>
+    <span class="n">df_cell_m</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list_cell_m</span><span class="p">)</span>
+
+    <span class="n">label</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Active material&quot;</span><span class="p">,</span> <span class="s2">&quot;Carbon&quot;</span><span class="p">,</span> <span class="s2">&quot;Binder&quot;</span><span class="p">,</span> <span class="s2">&quot;Solvent&quot;</span><span class="p">,</span> <span class="s2">&quot;Current Collector&quot;</span><span class="p">,</span> <span class="s2">&quot;Separator&quot;</span><span class="p">,</span> <span class="s2">&quot;Electrolyte&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;Mixing Anode&quot;</span><span class="p">,</span> <span class="s2">&quot;Mixing Cathode&quot;</span><span class="p">,</span> <span class="s2">&quot;Coating Anode&quot;</span><span class="p">,</span> <span class="s2">&quot;Coating Cathode&quot;</span><span class="p">,</span> <span class="s2">&quot;Drying Anode&quot;</span><span class="p">,</span> <span class="s2">&quot;Drying Cathode&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;Calendering Anode&quot;</span><span class="p">,</span> <span class="s2">&quot;Calendering Cathode&quot;</span><span class="p">,</span> <span class="s2">&quot;Slitting Anode&quot;</span><span class="p">,</span> <span class="s2">&quot;Slitting Cathode&quot;</span><span class="p">,</span> <span class="s2">&quot;Stacking/Winding&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;Filling&quot;</span><span class="p">,</span> <span class="s2">&quot;Formation&quot;</span><span class="p">,</span> <span class="s2">&quot;Cell Material&quot;</span><span class="p">,</span> <span class="s2">&quot;Scrap Material&quot;</span><span class="p">,</span> <span class="s2">&quot;Solvent Waste&quot;</span><span class="p">]</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">am1</span><span class="p">,</span> <span class="n">am2</span><span class="p">,</span> <span class="n">cb1</span><span class="p">,</span> <span class="n">cb2</span><span class="p">,</span> <span class="n">bn1</span><span class="p">,</span> <span class="n">bn2</span><span class="p">,</span> <span class="n">sol1</span><span class="p">,</span> <span class="n">sol2</span><span class="p">,</span> <span class="n">cc1</span><span class="p">,</span> <span class="n">cc2</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sep</span><span class="p">),</span> <span class="nb">sum</span><span class="p">(</span><span class="n">elec</span><span class="p">),</span>
+             <span class="n">am_mix1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">am_mix2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_mix1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_mix2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_mix1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_mix2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sol_mix1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sol_mix2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cc1</span><span class="p">,</span>
+             <span class="n">cc2</span><span class="p">,</span>
+             <span class="n">am_mix1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">am_mix2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_mix1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_mix2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_mix1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_mix2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sol_mix1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sol_mix2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cc1</span><span class="p">,</span>
+             <span class="n">cc2</span><span class="p">,</span>
+             <span class="n">am_dry1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">am_dry2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_dry1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_dry2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_dry1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_dry2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sol_dry1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sol_dry2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cc1</span><span class="p">,</span>
+             <span class="n">cc2</span><span class="p">,</span>
+             <span class="n">am_dry1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">am_dry2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_dry1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_dry2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_dry1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_dry2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cc1</span><span class="p">,</span> <span class="n">cc2</span><span class="p">,</span>
+             <span class="n">am_dry1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">am_dry2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_dry1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_dry2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_dry1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_dry2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cc1</span><span class="p">,</span> <span class="n">cc2</span><span class="p">,</span>
+             <span class="n">am_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">am_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cc_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cc_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sep</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+             <span class="n">am_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">am_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cc_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cc_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sep</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+             <span class="n">elec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+             <span class="n">am_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">am_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cb_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bn_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cc_drm1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cc_drm2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sep</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+             <span class="n">elec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+             <span class="n">am_mix1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">am_mix2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cb_mix1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cb_mix2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bn_mix1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bn_mix2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sol_mix1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sol_mix2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+             <span class="n">am_dry1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">am_dry2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cb_dry1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cb_dry2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bn_dry1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bn_dry2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sol_dry1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sol_dry2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+             <span class="n">am_drm1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">am_drm2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cb_drm1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cb_drm2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bn_drm1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bn_drm2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cc_drm1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cc_drm2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+             <span class="n">sep</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">elec</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">value</span> <span class="o">/</span> <span class="n">cells</span>  <span class="c1"># mass per cell in grams</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
+              <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+              <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
+              <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span>
+              <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span>
+              <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span>
+              <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span>
+              <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span>
+              <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span>
+              <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span>
+              <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span>
+              <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span>
+              <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
+              <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span>
+              <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span>
+              <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span>
+              <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span>
+              <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span>
+              <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span>
+              <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span>
+              <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span>
+              <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span>
+              <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">21</span><span class="p">]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span>
+         <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.53</span><span class="p">,</span> <span class="mf">0.53</span><span class="p">,</span>
+         <span class="mf">0.635</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.82</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.65</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span>
+         <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span>
+         <span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">]</span>
+
+    <span class="n">data_list_vst</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;mass&#39;</span><span class="p">:</span> <span class="n">value</span><span class="p">,</span> <span class="s1">&#39;pos_from&#39;</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span> <span class="s1">&#39;pos_to&#39;</span><span class="p">:</span> <span class="n">target</span><span class="p">}</span>
+    <span class="n">data_list_nxy</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;stream&#39;</span><span class="p">:</span> <span class="n">label</span><span class="p">,</span> <span class="s1">&#39;pos_x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;pos_y&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">}</span>
+    <span class="n">df_vst</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list_vst</span><span class="p">)</span>
+    <span class="n">df_nxy</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_list_nxy</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df_vst</span><span class="p">,</span> <span class="n">df_nxy</span><span class="p">,</span> <span class="n">df_cell_m</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, IndEcol NTNU.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
