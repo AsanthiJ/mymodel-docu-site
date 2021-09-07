@@ -1,0 +1,24 @@
+LIBProMod.postp.base\_material.BaseMaterials
+============================================
+
+.. currentmodule:: LIBProMod.postp.base_material
+
+.. autoclass:: BaseMaterials
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+   
+   
+
+   
+   
+   

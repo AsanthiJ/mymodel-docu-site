@@ -1,0 +1,32 @@
+LIBProMod.components.cellassembly
+=================================
+
+.. automodule:: LIBProMod.components.cellassembly
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      CellAssembly
+   
+   
+
+   
+   
+   
+
+
+

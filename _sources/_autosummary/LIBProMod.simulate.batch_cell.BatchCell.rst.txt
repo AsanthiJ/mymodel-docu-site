@@ -1,0 +1,24 @@
+LIBProMod.simulate.batch\_cell.BatchCell
+========================================
+
+.. currentmodule:: LIBProMod.simulate.batch_cell
+
+.. autoclass:: BatchCell
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+   
+   
+
+   
+   
+   

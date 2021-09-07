@@ -1,0 +1,36 @@
+LIBProMod.simulate
+==================
+
+.. automodule:: LIBProMod.simulate
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. autosummary::
+   :toctree:
+   :template: custom-module-template.rst
+   :recursive:
+
+   LIBProMod.simulate.batch_cell
+   LIBProMod.simulate.main
+   LIBProMod.simulate.main_for_all_chemistries
+   LIBProMod.simulate.main_for_gui
+   LIBProMod.simulate.main_parameter_effect
+   LIBProMod.simulate.run
+   LIBProMod.simulate.tune_option2
+

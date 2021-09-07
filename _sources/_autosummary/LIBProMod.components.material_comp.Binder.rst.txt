@@ -1,0 +1,24 @@
+LIBProMod.components.material\_comp.Binder
+==========================================
+
+.. currentmodule:: LIBProMod.components.material_comp
+
+.. autoclass:: Binder
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+   
+   
+
+   
+   
+   

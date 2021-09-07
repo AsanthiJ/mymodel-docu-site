@@ -1,0 +1,6 @@
+LIBProMod.simulate.main\_for\_gui.main\_data
+============================================
+
+.. currentmodule:: LIBProMod.simulate.main_for_gui
+
+.. autofunction:: main_data

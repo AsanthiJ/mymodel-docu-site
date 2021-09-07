@@ -1,0 +1,26 @@
+LIBProMod.components.solvent.Solvent
+====================================
+
+.. currentmodule:: LIBProMod.components.solvent
+
+.. autoclass:: Solvent
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~Solvent.vapor_pressure
+      ~Solvent.volume
+   
+   
+
+   
+   
+   

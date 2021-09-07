@@ -1,0 +1,24 @@
+LIBProMod.components.cell\_comp.NegativeTerminal
+================================================
+
+.. currentmodule:: LIBProMod.components.cell_comp
+
+.. autoclass:: NegativeTerminal
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+   
+   
+
+   
+   
+   

@@ -1,0 +1,24 @@
+LIBProMod.input.initial\_cell.InitialCell
+=========================================
+
+.. currentmodule:: LIBProMod.input.initial_cell
+
+.. autoclass:: InitialCell
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+   
+   
+
+   
+   
+   

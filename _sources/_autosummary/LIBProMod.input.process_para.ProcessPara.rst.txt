@@ -1,0 +1,24 @@
+LIBProMod.input.process\_para.ProcessPara
+=========================================
+
+.. currentmodule:: LIBProMod.input.process_para
+
+.. autoclass:: ProcessPara
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+   
+   
+
+   
+   
+   

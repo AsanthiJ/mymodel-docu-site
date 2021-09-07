@@ -1,0 +1,25 @@
+LIBProMod.components.electrode.Cathode
+======================================
+
+.. currentmodule:: LIBProMod.components.electrode
+
+.. autoclass:: Cathode
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~Cathode.total_mass
+   
+   
+
+   
+   
+   

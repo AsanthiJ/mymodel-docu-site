@@ -1,0 +1,29 @@
+code.InteractiveInterpreter
+===========================
+
+.. currentmodule:: code
+
+.. autoclass:: InteractiveInterpreter
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~InteractiveInterpreter.runcode
+      ~InteractiveInterpreter.runsource
+      ~InteractiveInterpreter.showsyntaxerror
+      ~InteractiveInterpreter.showtraceback
+      ~InteractiveInterpreter.write
+   
+   
+
+   
+   
+   

@@ -1,0 +1,25 @@
+LIBProMod.components.electrode.Anode
+====================================
+
+.. currentmodule:: LIBProMod.components.electrode
+
+.. autoclass:: Anode
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~Anode.total_mass
+   
+   
+
+   
+   
+   

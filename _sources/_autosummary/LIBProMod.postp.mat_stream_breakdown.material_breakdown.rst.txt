@@ -1,0 +1,6 @@
+LIBProMod.postp.mat\_stream\_breakdown.material\_breakdown
+==========================================================
+
+.. currentmodule:: LIBProMod.postp.mat_stream_breakdown
+
+.. autofunction:: material_breakdown

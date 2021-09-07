@@ -1,0 +1,41 @@
+﻿code
+====
+
+.. automodule:: code
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+      :toctree:
+      :nosignatures:
+   
+      interact
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      InteractiveConsole
+      InteractiveInterpreter
+   
+   
+
+   
+   
+   
+
+
+

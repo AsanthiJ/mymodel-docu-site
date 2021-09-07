@@ -1,0 +1,38 @@
+LIBProMod.process.dry\_room\_ss.DryRoomSs
+=========================================
+
+.. currentmodule:: LIBProMod.process.dry_room_ss
+
+.. autoclass:: DryRoomSs
+   :members:
+   :show-inheritance:
+   :inherited-members:
+   :special-members: __call__, __add__, __mul__
+
+   
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :nosignatures:
+   
+      ~DryRoomSs.energy
+      ~DryRoomSs.enthalpy
+      ~DryRoomSs.saturated_vapor_pressure
+      ~DryRoomSs.water_content
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~DryRoomSs.HeatCapacity
+      ~DryRoomSs.HumidityOut
+      ~DryRoomSs.SolventFlowRate
+      ~DryRoomSs.TransferAreaAir
+      ~DryRoomSs.TransferAreaSolvent
+   
+   

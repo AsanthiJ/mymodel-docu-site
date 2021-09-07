@@ -1,0 +1,33 @@
+LIB production model documentation
+====================================
+
+Package documentation
+------------------------
+This package gives energy and material flow for a lithium-ion battery production facility of a maximum 2 GWh annual
+capacity.
+
+.. autosummary::
+    :toctree: _autosummary
+    :template: custom-module-template.rst
+    :recursive:
+
+
+    LIBProMod
+
+
+Indices and tables
+~~~~~~~~~~~~~~~~~~~~
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+
+Model documentation
+----------------------
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Contents:
+
+    code

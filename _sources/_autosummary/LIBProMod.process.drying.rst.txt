@@ -1,0 +1,32 @@
+LIBProMod.process.drying
+========================
+
+.. automodule:: LIBProMod.process.drying
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      Drying
+   
+   
+
+   
+   
+   
+
+
+

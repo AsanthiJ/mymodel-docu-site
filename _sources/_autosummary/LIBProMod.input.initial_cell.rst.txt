@@ -1,0 +1,32 @@
+LIBProMod.input.initial\_cell
+=============================
+
+.. automodule:: LIBProMod.input.initial_cell
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+      :toctree:
+      :template: custom-class-template.rst
+      :nosignatures:
+   
+      InitialCell
+   
+   
+
+   
+   
+   
+
+
+
